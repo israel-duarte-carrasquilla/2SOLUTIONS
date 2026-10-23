@@ -1,190 +1,194 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. TILT EFFECT 3D ON MOUSE HOVER FOR LOGO CARD
-  const tiltCard = document.getElementById('tiltCard');
-  if (tiltCard) {
-    tiltCard.addEventListener('mousemove', (e) => {
-      const rect = tiltCard.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
+  const WHATSAPP_PHONE = '573043726578';
 
-      const rotateX = ((y - centerY) / centerY) * -12;
-      const rotateY = ((x - centerX) / centerX) * 12;
+  // 1. SIMULADOR DE MARCACIÓN (INTERACTIVO)
+  const simProductSelect = document.getElementById('simProduct');
+  const simTechniqueSelect = document.getElementById('simTechnique');
+  const simCustomText = document.getElementById('simCustomText');
+  const simLogoSize = document.getElementById('simLogoSize');
+  const simMockupImg = document.getElementById('simMockupImg');
+  const simMarkingOverlay = document.getElementById('simMarkingOverlay');
+  const simBrandText = document.getElementById('simBrandText');
+  const simMarkingImg = document.getElementById('simMarkingImg');
+  const simTechName = document.getElementById('simTechName');
+  const simTechDesc = document.getElementById('simTechDesc');
+  const styleButtons = document.querySelectorAll('.btn-style-choice');
+  const btnShareSim = document.getElementById('btnShareSim');
 
-      tiltCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-    });
-
-    tiltCard.addEventListener('mouseleave', () => {
-      tiltCard.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-    });
-  }
-
-  // 2. PRODUCT DATABASE WITH HIGH QUALITY PREVIEWS
-  const productCatalog = {
-    'esfero_metal': {
-      name: 'Esfero Metálico Ejecutivo con Grabado Láser',
-      category: 'escritura',
-      price: 4200,
-      img: 'assets/catalogo_samples/prod_esferos_metal.jpg',
-      badge: 'Línea Ejecutiva'
+  const productsDatabase = {
+    'termo': {
+      name: 'Termo Metálico / Botilito Acero 650ml',
+      img: 'assets/simulador/base_termo.jpg',
+      ideal: 'laser'
     },
-    'esfero_eco': {
-      name: 'Esfero Ecológico Trigo & Bambú Reciclado',
-      category: 'escritura',
-      price: 950,
-      img: 'assets/catalogo_samples/esfero_p7.jpg',
-      badge: '100% Ecológico'
+    'esfero': {
+      name: 'Esfero Ejecutivo Metálico',
+      img: 'assets/simulador/base_esfero.jpg',
+      ideal: 'laser'
     },
-    'botilito_sport': {
-      name: 'Botilito Metálico & Deportivo 650ml',
-      category: 'promos',
-      price: 11900,
-      img: 'assets/catalogo_samples/prod_botilitos.jpg',
-      badge: 'Acero Inoxidable'
+    'camiseta': {
+      name: 'Camiseta de Algodón / Textil Corporativo',
+      img: 'assets/catalogo_samples/prod_bolsas.jpg', // Representación textil
+      ideal: 'estampado'
     },
-    'agenda_ejecutiva': {
-      name: 'Agenda Corporativa Premium con Bolígrafo',
-      category: 'promos',
-      price: 13500,
-      img: 'assets/catalogo_samples/prod_agendas.jpg',
-      badge: 'Cuero PU / Bambú'
-    },
-    'bolsa_ecologica': {
-      name: 'Bolsa Ecológica Cambrel / Algodón Gran Formato',
-      category: 'promos',
-      price: 2800,
-      img: 'assets/catalogo_samples/prod_bolsas.jpg',
-      badge: 'Alta Resistencia'
-    },
-    'hogar_bento': {
-      name: 'Lonchera Bento Hermética & Cubiertos',
-      category: 'hogar',
-      price: 18900,
-      img: 'assets/catalogo_samples/hogar_p5.jpg',
-      badge: 'Grado Alimenticio'
+    'agenda': {
+      name: 'Agenda & Libreta Corporativa Bambú/Cuero',
+      img: 'assets/simulador/base_agenda.jpg',
+      ideal: 'dtfuv'
     }
   };
 
-  const techniqueRates = {
-    'laser': { name: 'Grabado Láser de Fibra', base: 950 },
-    'dtf_uv': { name: 'DTF UV Directo con Relieve', base: 1800 },
-    'tampografia': { name: 'Tampografía a 1 Tinta', base: 450 },
-    'sublimacion': { name: 'Sublimación Digital Full Color', base: 1200 },
-    'screen': { name: 'Serigrafía Screen', base: 650 },
-    'sin_marca': { name: 'Sin Marcación (Artículo Solo)', base: 0 }
+  const techniquesDatabase = {
+    'laser': {
+      name: 'Grabado Láser de Fibra',
+      cssClass: 'marking-mode-laser',
+      desc: 'Acabado indeleble de alta gama en relieve plateado/acero para metales y anodizados.'
+    },
+    'dtfuv': {
+      name: 'DTF UV con Barniz y Relieve 3D',
+      cssClass: 'marking-mode-dtfuv',
+      desc: 'Impresión full color táctil con acabado brillante y máxima resistencia mecánica.'
+    },
+    'estampado': {
+      name: 'Estampado Textil / DTF Textil / Screen',
+      cssClass: 'marking-mode-estampado',
+      desc: 'Pigmentos vibrantes fijados a calor sobre camisetas, gorras y material textil.'
+    },
+    'gold': {
+      name: 'Foil / Marcación Metalizada Oro',
+      cssClass: 'marking-mode-gold',
+      desc: 'Brillo metálico dorado reflectivo de lujo para agendas y estuches ejecutivos.'
+    }
   };
 
-  // DOM Elements
-  const productSelect = document.getElementById('calcProduct');
-  const quantityInput = document.getElementById('calcQty');
-  const techniqueSelect = document.getElementById('calcTechnique');
-  const specialInkCheck = document.getElementById('calcSpecialInk');
+  let currentTechnique = 'laser';
 
-  const liveMockupImg = document.getElementById('liveMockupImg');
-  const liveBadgeOverlay = document.getElementById('liveBadgeOverlay');
+  function updateSimulator() {
+    const prodKey = simProductSelect.value;
+    const prod = productsDatabase[prodKey] || productsDatabase['termo'];
 
-  const sumUnitProduct = document.getElementById('sumUnitProduct');
-  const sumUnitPrint = document.getElementById('sumUnitPrint');
-  const sumSubtotal = document.getElementById('sumSubtotal');
-  const sumIva = document.getElementById('sumIva');
-  const sumGrandTotal = document.getElementById('sumGrandTotal');
-  const btnSendWhatsApp = document.getElementById('btnSendQuoteWhatsApp');
+    // Cambiar imagen base del artículo
+    if (simMockupImg && prod.img) {
+      simMockupImg.src = prod.img;
+    }
 
-  function formatCOP(num) {
-    return new Intl.NumberFormat('es-CO', {
-      style: 'currency',
-      currency: 'COP',
-      maximumFractionDigits: 0
-    }).format(num);
+    // Actualizar texto personalizado
+    const textVal = simCustomText.value.trim();
+    if (simBrandText) {
+      simBrandText.textContent = textVal || 'TU EMPRESA';
+    }
+
+    // Tamaño del logo simulado
+    const sizeVal = simLogoSize.value;
+    if (simMarkingImg) {
+      simMarkingImg.style.width = `${sizeVal}px`;
+    }
+
+    // Aplicar técnica visual
+    const tech = techniquesDatabase[currentTechnique];
+    if (simMarkingOverlay && tech) {
+      simMarkingOverlay.className = `marking-overlay ${tech.cssClass}`;
+      if (simTechName) simTechName.textContent = tech.name;
+      if (simTechDesc) simTechDesc.textContent = tech.desc;
+    }
+
+    // Preparar mensaje WhatsApp con la simulación
+    if (btnShareSim) {
+      const msg = encodeURIComponent(
+        `¡Hola 2 SOLUTIONS! Estuve en su simulador de marcación:\n\n` +
+        `▪ *Artículo probado:* ${prod.name}\n` +
+        `▪ *Técnica simulada:* ${tech.name}\n` +
+        `▪ *Texto/Marca:* ${textVal || '2 SOLUTIONS'}\n\n` +
+        `¿Podrían cotizarme este tipo de marcación para mi empresa?`
+      );
+      btnShareSim.href = `https://wa.me/${WHATSAPP_PHONE}?text=${msg}`;
+    }
   }
 
-  function updateQuotation() {
-    const prodKey = productSelect.value;
-    const qty = Math.max(1, parseInt(quantityInput.value) || 100);
-    const techKey = techniqueSelect.value;
-    const hasSpecialColor = specialInkCheck ? specialInkCheck.checked : false;
+  // Escuchadores de botones de técnica
+  styleButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      styleButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentTechnique = btn.getAttribute('data-tech');
+      updateSimulator();
+    });
+  });
 
-    const prod = productCatalog[prodKey] || productCatalog['esfero_metal'];
-    const tech = techniqueRates[techKey] || techniqueRates['laser'];
+  if (simProductSelect) simProductSelect.addEventListener('change', updateSimulator);
+  if (simCustomText) simCustomText.addEventListener('input', updateSimulator);
+  if (simLogoSize) simLogoSize.addEventListener('input', updateSimulator);
 
-    // Update Live Visual Mockup
-    if (liveMockupImg && prod.img) {
-      liveMockupImg.src = prod.img;
-    }
-    if (liveBadgeOverlay) {
-      liveBadgeOverlay.textContent = prod.badge;
-    }
+  // Inicializar simulador
+  updateSimulator();
 
-    // Scale discounts
-    let prodDiscount = 1.0;
-    if (qty >= 1000) prodDiscount = 0.84;
-    else if (qty >= 500) prodDiscount = 0.89;
-    else if (qty >= 250) prodDiscount = 0.94;
+  // 2. COTIZADOR RÁPIDO
+  const calcProduct = document.getElementById('calcProduct');
+  const calcQty = document.getElementById('calcQty');
+  const calcTech = document.getElementById('calcTech');
+  const calcSubtotal = document.getElementById('calcSubtotal');
+  const calcIva = document.getElementById('calcIva');
+  const calcTotal = document.getElementById('calcTotal');
+  const btnSendQuote = document.getElementById('btnSendQuote');
 
-    let unitProdPrice = Math.round(prod.price * prodDiscount);
+  const pricing = {
+    'esferos': { base: 1200, name: 'Esferos Corporativos' },
+    'camisetas': { base: 19500, name: 'Estampado de Camisetas' },
+    'termos': { base: 14500, name: 'Botilitos / Termos de Acero' },
+    'corte_laser': { base: 8500, name: 'Corte Láser & Placas' },
+    'impresion': { base: 18000, name: 'Gran Formato & Vinilos' },
+    'agendas': { base: 13500, name: 'Agendas Ejecutivas' }
+  };
 
-    let printDiscount = 1.0;
-    if (qty >= 1000) printDiscount = 0.72;
-    else if (qty >= 500) printDiscount = 0.82;
-    else if (qty >= 200) printDiscount = 0.90;
+  const techCosts = {
+    'laser': 1100,
+    'dtf': 2200,
+    'estampado': 1800,
+    'screen': 750,
+    'sublimacion': 1400
+  };
 
-    let unitPrintPrice = Math.round(tech.base * printDiscount);
-    if (hasSpecialColor && techKey !== 'sin_marca') {
-      unitPrintPrice += 120;
-    }
+  function updateQuote() {
+    if (!calcProduct) return;
+    const prodKey = calcProduct.value;
+    const qty = Math.max(1, parseInt(calcQty.value) || 100);
+    const techKey = calcTech.value;
 
-    const subtotal = (unitProdPrice + unitPrintPrice) * qty;
+    const p = pricing[prodKey] || pricing['esferos'];
+    const t = techCosts[techKey] || 1000;
+
+    let discount = 1.0;
+    if (qty >= 1000) discount = 0.82;
+    else if (qty >= 500) discount = 0.88;
+    else if (qty >= 200) discount = 0.94;
+
+    const unitPrice = Math.round((p.base + t) * discount);
+    const subtotal = unitPrice * qty;
     const iva = Math.round(subtotal * 0.19);
     const total = subtotal + iva;
 
-    // Display numbers
-    sumUnitProduct.textContent = formatCOP(unitProdPrice);
-    sumUnitPrint.textContent = formatCOP(unitPrintPrice);
-    sumSubtotal.textContent = formatCOP(subtotal);
-    sumIva.textContent = formatCOP(iva);
-    sumGrandTotal.textContent = formatCOP(total);
+    function formatCOP(n) {
+      return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(n);
+    }
 
-    // WhatsApp Message
-    const msg = encodeURIComponent(
-      `¡Hola 2 SOLUTIONS! Me interesa cotizar este producto corporativo:\n\n` +
-      `▪ *Producto:* ${prod.name}\n` +
-      `▪ *Cantidad:* ${qty} unidades\n` +
-      `▪ *Técnica:* ${tech.name}\n` +
-      `▪ *Valor estimado:* ${formatCOP(total)} (IVA inc)\n\n` +
-      `¿Podrían confirmarme disponibilidad y tiempos de entrega?`
-    );
-    btnSendWhatsApp.href = `https://wa.me/573015374491?text=${msg}`;
+    if (calcSubtotal) calcSubtotal.textContent = formatCOP(subtotal);
+    if (calcIva) calcIva.textContent = formatCOP(iva);
+    if (calcTotal) calcTotal.textContent = formatCOP(total);
+
+    if (btnSendQuote) {
+      const qMsg = encodeURIComponent(
+        `¡Hola Ricardo / 2 SOLUTIONS! Me gustaría formalizar esta cotización:\n\n` +
+        `▪ *Servicio/Producto:* ${p.name}\n` +
+        `▪ *Cantidad:* ${qty} und\n` +
+        `▪ *Total estimado:* ${formatCOP(total)} (IVA inc)\n\n` +
+        `Quedo atento para coordinar arte gráfico y entrega.`
+      );
+      btnSendQuote.href = `https://wa.me/${WHATSAPP_PHONE}?text=${qMsg}`;
+    }
   }
 
-  // Event Listeners
-  if (productSelect && quantityInput && techniqueSelect) {
-    productSelect.addEventListener('change', updateQuotation);
-    quantityInput.addEventListener('input', updateQuotation);
-    techniqueSelect.addEventListener('change', updateQuotation);
-    if (specialInkCheck) specialInkCheck.addEventListener('change', updateQuotation);
-
-    // Run initial calculation
-    updateQuotation();
-  }
-
-  // 3. CATALOG CATEGORY FILTERING TABS
-  const catTabs = document.querySelectorAll('.cat-tab');
-  const catCards = document.querySelectorAll('.cat-card');
-
-  catTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      catTabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-
-      const filter = tab.getAttribute('data-filter');
-      catCards.forEach(card => {
-        if (filter === 'all' || card.getAttribute('data-cat') === filter) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    });
-  });
+  if (calcProduct) calcProduct.addEventListener('change', updateQuote);
+  if (calcQty) calcQty.addEventListener('input', updateQuote);
+  if (calcTech) calcTech.addEventListener('change', updateQuote);
+  updateQuote();
 });

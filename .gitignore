@@ -1,0 +1,11 @@
+# Antigravity & OS cache
+.gemini/
+.system_generated/
+*.log
+*.tmp
+Thumbs.db
+desktop.ini
+
+# Huge PDFs in DOCUMENTOS root (los de la web ya están listos en web/catalogos)
+DOCUMENTOS/*.pdf
+*.zip

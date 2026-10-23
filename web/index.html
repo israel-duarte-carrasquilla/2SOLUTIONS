@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>2 SOLUTIONS S.A.S. | Experiencia, Creatividad & Compromiso</title>
+  <title>2 SOLUTIONS S.A.S. | Tienda Virtual & Catálogos Corporativos 2026</title>
   <link rel="icon" type="image/png" href="assets/favicon.png">
 
   <!-- Google Fonts Inter -->
@@ -14,10 +14,56 @@
   <!-- FontAwesome 6 Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <!-- Metallic & Industrial CSS Stylesheet -->
+  <!-- Estilos Principales & Tienda Virtual -->
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/store.css">
 </head>
 <body>
+
+  <!-- BOTÓN FLOTANTE DE COTIZACIÓN / CARRITO -->
+  <div class="floating-quote-btn" id="floatingQuoteBtn">
+    <i class="fa-solid fa-cart-shopping"></i>
+    <span>Ver Mi Cotización</span>
+    <span class="cart-count-badge" id="cartCountBadge">0</span>
+  </div>
+
+  <!-- MODAL / DRAWER DE COTIZACIÓN -->
+  <div class="cart-modal" id="cartModal">
+    <div class="cart-drawer">
+      <div class="cart-header">
+        <h3><i class="fa-solid fa-receipt" style="color: var(--orange-bright); margin-right: 8px;"></i> Tu Cotización</h3>
+        <button class="btn-close-cart" id="btnCloseCart">&times;</button>
+      </div>
+
+      <div class="cart-items-list" id="cartItemsList">
+        <!-- Renderizado dinámico vía JS -->
+      </div>
+
+      <div class="cart-footer">
+        <div class="cart-summary-line">
+          <span>Subtotal artículos:</span>
+          <strong id="cartDrawerSubtotal" style="color: #ffffff;">$ 0</strong>
+        </div>
+        <div class="cart-summary-line">
+          <span>IVA estimado (19%):</span>
+          <span id="cartDrawerIva">$ 0</span>
+        </div>
+        <div class="cart-summary-line total">
+          <span>TOTAL ESTIMADO:</span>
+          <span id="cartDrawerTotal">$ 0</span>
+        </div>
+
+        <div style="margin-top: 1.5rem;">
+          <a id="btnSendWhatsAppCart" href="#" target="_blank" class="btn btn-whatsapp" style="width: 100%; font-size: 1rem;">
+            <i class="fa-brands fa-whatsapp"></i> Solicitar Esta Cotización a Ricardo
+          </a>
+          <p style="font-size: 0.72rem; color: #64748b; text-align: center; margin-top: 8px;">
+            Atención personalizada de Ricardo (+57 304 3726578). Envíos nacionales.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- NAVBAR -->
   <nav class="navbar">
@@ -31,50 +77,50 @@
       </a>
 
       <ul class="nav-links">
-        <li><a href="#simulador" class="nav-link">Simulador de Marca</a></li>
-        <li><a href="#servicios" class="nav-link">Servicios & Estampado</a></li>
+        <li><a href="#tienda" class="nav-link">Tienda Virtual</a></li>
         <li><a href="#catalogos" class="nav-link">Catálogos 2026</a></li>
-        <li><a href="#cotizador" class="nav-link">Cotizador Rápido</a></li>
+        <li><a href="#simulador" class="nav-link">Simulador de Marca</a></li>
+        <li><a href="#servicios" class="nav-link">Servicios & Estampados</a></li>
       </ul>
 
       <div class="nav-actions">
-        <a href="https://wa.me/573043726578?text=Hola%20Ricardo%20(2%20SOLUTIONS),%20me%20gustar%C3%ADa%20cotizar%20servicios%20de%20marcaci%C3%B3n%20y%20merchandising" target="_blank" class="btn btn-whatsapp">
+        <a href="https://wa.me/573043726578?text=Hola%20Ricardo%20(2%20SOLUTIONS),%20me%20gustar%C3%ADa%20cotizar%20art%C3%ADculos%20promocionales" target="_blank" class="btn btn-whatsapp">
           <i class="fa-brands fa-whatsapp"></i> +57 304 3726578
         </a>
       </div>
     </div>
   </nav>
 
-  <!-- HERO SECTION CON EFECTO METALIZADO Y REFLEJO LUMINOSO -->
+  <!-- HERO SECTION -->
   <header class="hero">
     <div class="hero-grid">
       <div class="hero-content">
         <div class="hero-tag">
-          <i class="fa-solid fa-bolt-lightning"></i> Branding & Producción Industrial 2026
+          <i class="fa-solid fa-crown"></i> Nueva Tienda Virtual & Catálogos 2026
         </div>
         <h1 class="hero-title">
-          Soluciones de <span class="metallic-text-orange">Branding</span>, <span class="metallic-text-silver">Marcación Láser</span> & Merchandising Corporativo
+          Catálogo Interactivo & <span class="metallic-text-orange">Tienda Virtual</span> de Artículos Promocionales
         </h1>
         <p class="hero-desc">
-          Especialistas en estampado de camisetas, corte láser de precisión, impresiones en gran formato, artículos promocionales y personalización de alta gama con el respaldo de <strong>2 SOLUTIONS S.A.S.</strong>
+          Arma tu cotización en línea seleccionando productos al por mayor, prueba cómo lucirá tu marca en el simulador de acabados y recibe tu propuesta directa con <strong>Ricardo en 2 SOLUTIONS S.A.S.</strong>
         </p>
 
         <div class="hero-btns">
-          <a href="#simulador" class="btn btn-orange">
-            <i class="fa-solid fa-wand-magic-sparkles"></i> Probar Simulador de Marcación
+          <a href="#tienda" class="btn btn-orange">
+            <i class="fa-solid fa-bag-shopping"></i> Comprar / Cotizar en Tienda
           </a>
           <a href="#catalogos" class="btn btn-steel">
-            <i class="fa-solid fa-file-pdf"></i> Ver Catálogos 2026
+            <i class="fa-solid fa-file-pdf"></i> Descargar Catálogos Rediseñados
           </a>
         </div>
       </div>
 
-      <!-- TARJETA CON LOGO EXACTO Y BARRIDO METALIZADO -->
+      <!-- TARJETA LOGO CON REFLEJO -->
       <div class="hero-logo-box">
-        <img src="assets/logo-exacto-2solutions.png" alt="2 SOLUTIONS Logo Oficial Metalizado" class="hero-main-logo">
+        <img src="assets/logo-exacto-2solutions.png" alt="2 SOLUTIONS Logo Metalizado" class="hero-main-logo">
         <div class="hero-logo-footer">
-          <span><i class="fa-solid fa-shield-halved"></i> Calidad Premium</span>
-          <span><i class="fa-solid fa-boxes-packing"></i> Despachos Nacionales</span>
+          <span><i class="fa-solid fa-truck-fast"></i> Despachos a Todo el País</span>
+          <span><i class="fa-solid fa-award"></i> Venta Directa por Mayor</span>
         </div>
       </div>
     </div>
@@ -84,67 +130,165 @@
   <section class="trust-strip">
     <div class="trust-wrap">
       <div class="trust-card">
-        <div class="trust-icon"><i class="fa-solid fa-id-card"></i></div>
+        <div class="trust-icon"><i class="fa-solid fa-file-shield"></i></div>
         <div>
           <div class="trust-title">NIT: 901.978.048-9</div>
-          <div class="trust-desc">2SOLUTIONS S.A.S. formalizada</div>
+          <div class="trust-desc">2SOLUTIONS S.A.S.</div>
         </div>
       </div>
 
       <div class="trust-card">
-        <div class="trust-icon"><i class="fa-solid fa-phone-volume"></i></div>
+        <div class="trust-icon"><i class="fa-brands fa-whatsapp"></i></div>
         <div>
           <div class="trust-title">+57 304 3726578</div>
-          <div class="trust-desc">Línea directa Ricardo</div>
+          <div class="trust-desc">Contacto Directo Ricardo</div>
         </div>
       </div>
 
       <div class="trust-card">
         <div class="trust-icon"><i class="fa-solid fa-shirt"></i></div>
         <div>
-          <div class="trust-title">Taller de Estampado & Láser</div>
-          <div class="trust-desc">Producción propia y acabados</div>
+          <div class="trust-title">Taller de Estampados & Láser</div>
+          <div class="trust-desc">Marcación industrial directa</div>
         </div>
       </div>
 
       <div class="trust-card">
-        <div class="trust-icon"><i class="fa-solid fa-award"></i></div>
+        <div class="trust-icon"><i class="fa-solid fa-cart-flatbed-suitcase"></i></div>
         <div>
-          <div class="trust-title">+20 Años de Experiencia</div>
-          <div class="trust-desc">Importación y distribución</div>
+          <div class="trust-title">Cotizador Online</div>
+          <div class="trust-desc">Arma tu paquete y cotiza al instante</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SECCIÓN SIMULADOR DE MARCACIÓN EN TIEMPO REAL -->
-  <section id="simulador" class="section">
+  <!-- TIENDA VIRTUAL INTERACTIVA (E-COMMERCE B2B DE COTIZACIÓN) -->
+  <section id="tienda" class="store-section">
     <div class="section-title-wrap">
-      <span class="section-badge">Herramienta Interactiva HTML5</span>
-      <h2 class="section-heading">Simulador de Marcación & Acabados</h2>
+      <span class="section-badge">Catálogo Comercial en Vivo</span>
+      <h2 class="section-heading">Tienda Virtual de Productos Corporativos</h2>
       <p class="section-text">
-        Elige un artículo, escribe el nombre de tu empresa o usa tu marca y visualiza en vivo el acabado con efectos metalizados de grabado láser, DTF UV 3D o estampado textil.
+        Selecciona las cantidades que necesitas y agrega productos a tu cotización con un solo clic.
+      </p>
+    </div>
+
+    <!-- Filtros de Tienda -->
+    <div class="store-filters">
+      <button class="store-filter-btn active" data-store-cat="all">Todos los Productos</button>
+      <button class="store-filter-btn" data-store-cat="esferos">Esferos & Escritura</button>
+      <button class="store-filter-btn" data-store-cat="promocionales">Termos, Agendas & Mugs</button>
+      <button class="store-filter-btn" data-store-cat="hogar">Hogar & Loncheras</button>
+      <button class="store-filter-btn" data-store-cat="servicios">Camisetas & Láser</button>
+    </div>
+
+    <!-- Grilla de Productos Dinámica -->
+    <div class="store-grid" id="storeGrid">
+      <!-- Generado dinámicamente desde store.js -->
+    </div>
+  </section>
+
+  <!-- CATÁLOGOS OFICIALES REDISEÑADOS 2026 -->
+  <section id="catalogos" class="section">
+    <div class="section-title-wrap">
+      <span class="section-badge">Edición Rediseñada 2026</span>
+      <h2 class="section-heading">Catálogos Corporativos 2026 en PDF</h2>
+      <p class="section-text">
+        Descarga los catálogos actualizados con carátulas oficiales, índice técnico y especificaciones completas.
+      </p>
+    </div>
+
+    <div class="catalogs-grid">
+      <!-- 1. Catálogo Esferos -->
+      <div class="cat-card">
+        <div class="cat-thumb">
+          <img src="assets/catalogo_samples/cover_esferos.jpg" alt="Catálogo Esferos 2026">
+          <span class="cat-badge">35 Páginas</span>
+        </div>
+        <div class="cat-body">
+          <h3 class="cat-name">Catálogo Esferos 2026</h3>
+          <p class="cat-info">Bolígrafos ecológicos de paja de trigo, modelos metálicos para láser y sets ejecutivos.</p>
+          <a href="catalogos/catalogo-esferos-2026.pdf" target="_blank" class="btn btn-orange" style="width: 100%;">
+            <i class="fa-solid fa-file-arrow-down"></i> Descargar Catálogo PDF
+          </a>
+        </div>
+      </div>
+
+      <!-- 2. Catálogo Promocionales -->
+      <div class="cat-card">
+        <div class="cat-thumb">
+          <img src="assets/catalogo_samples/cover_promos.jpg" alt="Catálogo Promocionales 2026">
+          <span class="cat-badge">96 Páginas</span>
+        </div>
+        <div class="cat-body">
+          <h3 class="cat-name">Catálogo Promocionales 2026</h3>
+          <p class="cat-info">Agendas, botilitos térmicos, termos de acero, sombrillas golf, bolsas ecológicas y tecnología.</p>
+          <a href="catalogos/catalogo-promocionales-2026.pdf" target="_blank" class="btn btn-orange" style="width: 100%;">
+            <i class="fa-solid fa-file-arrow-down"></i> Descargar Catálogo PDF
+          </a>
+        </div>
+      </div>
+
+      <!-- 3. Catálogo Hogar Plus -->
+      <div class="cat-card">
+        <div class="cat-thumb">
+          <img src="assets/catalogo_samples/cover_hogar.jpg" alt="Catálogo Hogar Plus 2026">
+          <span class="cat-badge">26 Páginas</span>
+        </div>
+        <div class="cat-body">
+          <h3 class="cat-name">Catálogo Hogar Plus 2026</h3>
+          <p class="cat-info">Loncheras Bento ecológicas, cofres bar en bambú, sets para asados y artículos para el hogar.</p>
+          <a href="catalogos/catalogo-hogar-plus-2026.pdf" target="_blank" class="btn btn-orange" style="width: 100%;">
+            <i class="fa-solid fa-file-arrow-down"></i> Descargar Catálogo PDF
+          </a>
+        </div>
+      </div>
+
+      <!-- 4. Manual de Servicios y Tarifario -->
+      <div class="cat-card">
+        <div class="cat-thumb">
+          <img src="assets/catalogo_samples/cover_servicios.jpg" alt="Manual de Servicios 2026">
+          <span class="cat-badge">Tarifario</span>
+        </div>
+        <div class="cat-body">
+          <h3 class="cat-name">Manual de Servicios & Tarifario</h3>
+          <p class="cat-info">Especificaciones técnicas de áreas de marca, serigrafía, láser, DTF UV y precios mayoristas.</p>
+          <a href="catalogos/catalogo-servicios-2026.pdf" target="_blank" class="btn btn-orange" style="width: 100%;">
+            <i class="fa-solid fa-file-arrow-down"></i> Descargar Tarifario PDF
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIMULADOR DE MARCACIÓN EN VIVO -->
+  <section id="simulador" class="section" style="background: rgba(10, 19, 34, 0.6);">
+    <div class="section-title-wrap">
+      <span class="section-badge">Prueba Visual en Línea</span>
+      <h2 class="section-heading">Simulador de Marcación en Tiempo Real</h2>
+      <p class="section-text">
+        Prueba cómo se verá tu logo o el nombre de tu empresa en diferentes acabados industriales.
       </p>
     </div>
 
     <div class="simulator-box">
-      <!-- PANEL DE CONFIGURACIÓN -->
+      <!-- Panel Controles -->
       <div>
-        <h3 class="sim-controls-title">1. Configura tu Simulación</h3>
-        <p class="sim-controls-desc">Ajusta los parámetros para ver cómo lucirá tu marca en el producto terminado.</p>
+        <h3 class="sim-controls-title">Configura tu Acabado</h3>
+        <p class="sim-controls-desc">Prueba diferentes técnicas y tamaños sobre los artículos más solicitados.</p>
 
         <div class="sim-group">
-          <label class="sim-label">Artículo para Marcar</label>
+          <label class="sim-label">Producto Base</label>
           <select id="simProduct" class="sim-select">
-            <option value="termo" selected>Termo / Botilito Metálico de Acero (650ml)</option>
-            <option value="esfero">Esfero Ejecutivo Metálico (Línea Alta Gama)</option>
-            <option value="camiseta">Camiseta de Algodón / Textil Promocional</option>
-            <option value="agenda">Agenda Corporativa Bambú / Cuero PU</option>
+            <option value="termo" selected>Termo / Botilito Metálico Acero 650ml</option>
+            <option value="esfero">Esfero Ejecutivo Metálico</option>
+            <option value="camiseta">Camiseta de Algodón / Textil</option>
+            <option value="agenda">Agenda Corporativa Bambú / Cuero</option>
           </select>
         </div>
 
         <div class="sim-group">
-          <label class="sim-label">Técnica de Acabado / Marcación</label>
+          <label class="sim-label">Técnica de Acabado</label>
           <div class="style-buttons">
             <button type="button" class="btn-style-choice active" data-tech="laser">
               <i class="fa-solid fa-crosshairs"></i> Grabado Láser
@@ -156,29 +300,27 @@
               <i class="fa-solid fa-shirt"></i> Estampado
             </button>
             <button type="button" class="btn-style-choice" data-tech="gold">
-              <i class="fa-solid fa-crown"></i> Foil Oro Metálico
+              <i class="fa-solid fa-crown"></i> Foil Oro
             </button>
           </div>
         </div>
 
         <div class="sim-group">
-          <label class="sim-label">Texto o Nombre de Marca en el Producto</label>
-          <input type="text" id="simCustomText" class="sim-input" placeholder="Ej: TU LOGO AQUÍ" value="2 SOLUTIONS">
+          <label class="sim-label">Nombre de Marca o Texto</label>
+          <input type="text" id="simCustomText" class="sim-input" value="2 SOLUTIONS">
         </div>
 
         <div class="sim-group">
-          <label class="sim-label">Escala / Tamaño de Marcación</label>
-          <input type="range" id="simLogoSize" class="sim-input" min="70" max="180" value="120" style="cursor: pointer;">
+          <label class="sim-label">Tamaño de Marcación</label>
+          <input type="range" id="simLogoSize" class="sim-input" min="70" max="180" value="120">
         </div>
       </div>
 
-      <!-- CANVAS VISUAL DE MOCKUP EN VIVO -->
+      <!-- Preview Mockup -->
       <div class="sim-preview-panel">
         <div class="canvas-mockup-stage" id="mockupStage">
-          <!-- Imagen de fondo del producto -->
           <img id="simMockupImg" src="assets/simulador/base_termo.jpg" alt="Producto base" class="mockup-item-img">
           
-          <!-- Capa de marcación interactiva con filtros CSS metalizados -->
           <div id="simMarkingOverlay" class="marking-overlay marking-mode-laser">
             <img id="simMarkingImg" src="assets/logo-exacto-2solutions.png" alt="Marca simulada">
             <span id="simBrandText" class="custom-brand-text">2 SOLUTIONS</span>
@@ -188,7 +330,7 @@
         <div class="sim-specs-card">
           <div class="sim-specs-info">
             <h4 id="simTechName">Grabado Láser de Fibra</h4>
-            <p id="simTechDesc">Acabado permanente de alta precisión para superficies metálicas.</p>
+            <p id="simTechDesc">Acabado indeleble de alta precisión para superficies metálicas.</p>
           </div>
           <a id="btnShareSim" href="#" target="_blank" class="btn btn-whatsapp" style="padding: 0.6rem 1.1rem; font-size: 0.85rem;">
             <i class="fa-brands fa-whatsapp"></i> Cotizar Esta Simulación
@@ -198,192 +340,37 @@
     </div>
   </section>
 
-  <!-- PORTAFOLIO DE SERVICIOS EXPANDIDO -->
-  <section id="servicios" class="section" style="background: rgba(10, 19, 34, 0.5);">
+  <!-- SERVICIOS EXPANDIDOS -->
+  <section id="servicios" class="section">
     <div class="section-title-wrap">
-      <span class="section-badge">Soluciones Industriales & Publicitarias</span>
-      <h2 class="section-heading">Nuestros Servicios Principales</h2>
-      <p class="section-text">
-        Cubrimos todo el ciclo de diseño, producción, estampado y personalización para marcas empresariales en Barranquilla y toda Colombia.
-      </p>
+      <span class="section-badge">Taller y Producción Directa</span>
+      <h2 class="section-heading">Estampados, Corte Láser & Branding</h2>
+      <p class="section-text">Contamos con infraestructura técnica para abastecer a tu empresa en Colombia.</p>
     </div>
 
     <div class="services-strip-grid">
-      <!-- 1. Estampado de Camisetas -->
       <div class="service-box">
         <div class="service-icon"><i class="fa-solid fa-shirt"></i></div>
         <h3 class="service-title">Estampado de Camisetas</h3>
-        <p class="service-desc">
-          Técnicas de DTF Textil, serigrafía y vinilo textil termotransferible sobre camisetas cuello redondo, tipo polo, uniformes corporativos y chalecos.
-        </p>
+        <p class="service-desc">DTF Textil de alta durabilidad, serigrafía y vinilo termotransferible en camisetas y dotaciones.</p>
       </div>
 
-      <!-- 2. Corte Láser de Precisión -->
       <div class="service-box">
         <div class="service-icon"><i class="fa-solid fa-crosshairs"></i></div>
         <h3 class="service-title">Corte Láser & Grabado</h3>
-        <p class="service-desc">
-          Corte y grabado sobre madera MDF, acrílico, placas metálicas de identificación, trofeos, estuches de regalo y piezas industriales a medida.
-        </p>
+        <p class="service-desc">Corte y grabado sobre MDF, acrílico, placas metálicas y estuches de madera de lujo.</p>
       </div>
 
-      <!-- 3. Impresión Gran Formato & Vinilos -->
       <div class="service-box">
         <div class="service-icon"><i class="fa-solid fa-panorama"></i></div>
         <h3 class="service-title">Impresión Gran Formato</h3>
-        <p class="service-desc">
-          Banners publicitarios, vinilos adhesivos laminados con protección UV, microperforados para vitrinas, rompetráficos y señalética para eventos y ferias.
-        </p>
+        <p class="service-desc">Pendones, vinilos adhesivos con laminado mate o brillante y microperforados para publicidad.</p>
       </div>
 
-      <!-- 4. Branding & Identidad Visual -->
       <div class="service-box">
         <div class="service-icon"><i class="fa-solid fa-pen-ruler"></i></div>
-        <h3 class="service-title">Branding & Diseño Gráfico</h3>
-        <p class="service-desc">
-          Desarrollo y adaptación de logotipos a vectores para maquinaria industrial, manuales de marca y asesoría estética para materiales corporativos.
-        </p>
-      </div>
-
-      <!-- 5. DTF UV con Relieve 3D -->
-      <div class="service-box">
-        <div class="service-icon"><i class="fa-solid fa-layer-group"></i></div>
-        <h3 class="service-title">DTF UV con Relieve y Barniz</h3>
-        <p class="service-desc">
-          Impresión directa en relieve sobre materiales rígidos: termos cilíndricos, libretas, esferos y artículos de tecnología sin límite de colores.
-        </p>
-      </div>
-
-      <!-- 6. Tampografía & Serigrafía Masiva -->
-      <div class="service-box">
-        <div class="service-icon"><i class="fa-solid fa-stamp"></i></div>
-        <h3 class="service-title">Tampografía & Screen</h3>
-        <p class="service-desc">
-          Tirajes masivos con alta velocidad para bolsas ecológicas en cambrel, sombrillas golf, botilitos y material POP de gran volumen.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CATÁLOGOS OFICIALES 2026 -->
-  <section id="catalogos" class="section">
-    <div class="section-title-wrap">
-      <span class="section-badge">Líneas de Producto</span>
-      <h2 class="section-heading">Catálogos Oficiales 2026</h2>
-      <p class="section-text">
-        Descarga el catálogo que necesitas con especificaciones completas para tu próxima campaña corporativa.
-      </p>
-    </div>
-
-    <div class="catalogs-grid">
-      <div class="cat-card">
-        <div class="cat-thumb">
-          <img src="assets/catalogo_samples/cover_esferos.jpg" alt="Catálogo Esferos 2026">
-          <span class="cat-badge">35 Págs</span>
-        </div>
-        <div class="cat-body">
-          <h3 class="cat-name">Catálogo Esferos 2026</h3>
-          <p class="cat-info">Bolígrafos ecológicos de paja de trigo, bambú reciclado, esferos metálicos ejecutivos y llaveros publicitarios.</p>
-          <a href="catalogos/catalogo-esferos-2026.pdf" target="_blank" class="btn btn-orange" style="width: 100%;">
-            <i class="fa-solid fa-file-pdf"></i> Descargar PDF
-          </a>
-        </div>
-      </div>
-
-      <div class="cat-card">
-        <div class="cat-thumb">
-          <img src="assets/catalogo_samples/cover_promos.jpg" alt="Catálogo Promocionales 2026">
-          <span class="cat-badge">96 Págs</span>
-        </div>
-        <div class="cat-body">
-          <h3 class="cat-name">Catálogo Promocionales 2026</h3>
-          <p class="cat-info">Agendas, botilitos deportivos, termos herméticos, sombrillas golf, bolsas ecológicas y tecnología corporativa.</p>
-          <a href="catalogos/catalogo-promocionales-2026.pdf" target="_blank" class="btn btn-orange" style="width: 100%;">
-            <i class="fa-solid fa-file-pdf"></i> Descargar PDF
-          </a>
-        </div>
-      </div>
-
-      <div class="cat-card">
-        <div class="cat-thumb">
-          <img src="assets/catalogo_samples/cover_hogar.jpg" alt="Catálogo Hogar Plus 2026">
-          <span class="cat-badge">26 Págs</span>
-        </div>
-        <div class="cat-body">
-          <h3 class="cat-name">Catálogo Hogar Plus 2026</h3>
-          <p class="cat-info">Loncheras Bento herméticas, sets de asado, cofres bar en bambú, artículos de bienestar y línea para mascotas.</p>
-          <a href="catalogos/catalogo-hogar-plus-2026.pdf" target="_blank" class="btn btn-orange" style="width: 100%;">
-            <i class="fa-solid fa-file-pdf"></i> Descargar PDF
-          </a>
-        </div>
-      </div>
-
-      <div class="cat-card">
-        <div class="cat-thumb">
-          <img src="assets/catalogo_samples/cover_servicios.jpg" alt="Tarifario de Servicios">
-          <span class="cat-badge">Tarifario</span>
-        </div>
-        <div class="cat-body">
-          <h3 class="cat-name">Manual de Servicios & Marcación</h3>
-          <p class="cat-info">Lista oficial de precios por volumen, áreas de impresión permitidas y especificaciones técnicas de archivos.</p>
-          <a href="catalogos/catalogo-servicios-2026.pdf" target="_blank" class="btn btn-orange" style="width: 100%;">
-            <i class="fa-solid fa-file-pdf"></i> Descargar PDF
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- COTIZADOR RÁPIDO -->
-  <section id="cotizador" class="section" style="background: radial-gradient(circle at 50% 50%, #0d1e38 0%, #050d1a 100%);">
-    <div class="section-title-wrap">
-      <span class="section-badge">Presupuesto Directo</span>
-      <h2 class="section-heading">Cotizador Rápido Corporativo</h2>
-      <p class="section-text">Calcula un valor preliminar y envíalo directamente al WhatsApp de Ricardo.</p>
-    </div>
-
-    <div style="max-width: 900px; margin: 0 auto; background: var(--surface-card); border: 1px solid var(--border-silver); border-radius: 20px; padding: 2.5rem; box-shadow: var(--shadow-metallic);">
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
-        <div>
-          <label class="sim-label">Servicio o Producto</label>
-          <select id="calcProduct" class="sim-select">
-            <option value="esferos" selected>Esferos Corporativos Grabados</option>
-            <option value="camisetas">Estampado de Camisetas (Cuello Redondo / Polo)</option>
-            <option value="termos">Botilitos / Termos de Acero</option>
-            <option value="corte_laser">Corte Láser & Placas de Identificación</option>
-            <option value="impresion">Gran Formato (Pendones / Vinilos)</option>
-            <option value="agendas">Agendas Corporativas Premium</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="sim-label">Cantidad (Unidades)</label>
-          <input type="number" id="calcQty" class="sim-input" value="100" min="20" step="10">
-        </div>
-
-        <div>
-          <label class="sim-label">Técnica de Acabado</label>
-          <select id="calcTech" class="sim-select">
-            <option value="laser" selected>Grabado Láser de Fibra</option>
-            <option value="dtf">DTF UV / Relieve 3D</option>
-            <option value="estampado">Estampado Textil DTF</option>
-            <option value="screen">Serigrafía (Screen)</option>
-            <option value="sublimacion">Sublimación Full Color</option>
-          </select>
-        </div>
-      </div>
-
-      <div style="border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;">
-        <div>
-          <div style="font-size: 0.85rem; color: #94a3b8;">Subtotal: <strong id="calcSubtotal" style="color: #ffffff;">$ 195.000</strong> | IVA: <span id="calcIva">$ 37.050</span></div>
-          <div style="font-size: 1.6rem; font-weight: 900; color: var(--orange-bright);">TOTAL ESTIMADO: <span id="calcTotal">$ 232.050</span></div>
-        </div>
-
-        <div>
-          <a id="btnSendQuote" href="#" target="_blank" class="btn btn-whatsapp" style="font-size: 1rem; padding: 0.85rem 1.8rem;">
-            <i class="fa-brands fa-whatsapp"></i> Enviar Cotización a Ricardo
-          </a>
-        </div>
+        <h3 class="service-title">Branding Corporativo</h3>
+        <p class="service-desc">Vectorización de logotipos, adaptación técnica para maquinaria de marcación y diseño gráfico.</p>
       </div>
     </div>
   </section>
@@ -392,36 +379,35 @@
   <footer class="footer">
     <div class="footer-wrap">
       <div>
-        <img src="assets/logo-exacto-2solutions.png" alt="2 SOLUTIONS Logo" class="footer-brand-img">
+        <img src="assets/logo-exacto-2solutions.png" alt="2 SOLUTIONS" style="max-width: 200px; margin-bottom: 1rem;">
         <p class="footer-p">
           <strong>2SOLUTIONS S.A.S.</strong><br>
-          Soluciones integrales de estampados, corte láser, gran formato, merchandising corporativo y servicios publicitarios de alta fidelidad.
+          Comercialización de artículos promocionales, regalos empresariales, dotaciones, estampado textil, corte láser y soluciones integrales de marca.
         </p>
+      </div>
+
+      <div>
+        <h4 class="footer-h4">Líneas de Catálogo</h4>
+        <ul class="footer-links">
+          <li><a href="catalogos/catalogo-esferos-2026.pdf" target="_blank">Catálogo Esferos 2026</a></li>
+          <li><a href="catalogos/catalogo-promocionales-2026.pdf" target="_blank">Catálogo Promocionales 2026</a></li>
+          <li><a href="catalogos/catalogo-hogar-plus-2026.pdf" target="_blank">Catálogo Hogar Plus 2026</a></li>
+          <li><a href="catalogos/catalogo-servicios-2026.pdf" target="_blank">Tarifario de Servicios</a></li>
+        </ul>
       </div>
 
       <div>
         <h4 class="footer-h4">Servicios</h4>
         <ul class="footer-links">
           <li><a href="#servicios">Estampado de Camisetas</a></li>
-          <li><a href="#servicios">Corte Láser & Grabado</a></li>
+          <li><a href="#servicios">Corte Láser & Placas</a></li>
           <li><a href="#servicios">Impresión Gran Formato</a></li>
-          <li><a href="#servicios">Branding & Identidad</a></li>
-          <li><a href="#servicios">DTF UV & Relieve 3D</a></li>
+          <li><a href="#servicios">Branding Corporativo</a></li>
         </ul>
       </div>
 
       <div>
-        <h4 class="footer-h4">Catálogos 2026</h4>
-        <ul class="footer-links">
-          <li><a href="catalogos/catalogo-esferos-2026.pdf" target="_blank">Línea de Esferos</a></li>
-          <li><a href="catalogos/catalogo-promocionales-2026.pdf" target="_blank">Promocionales Generales</a></li>
-          <li><a href="catalogos/catalogo-hogar-plus-2026.pdf" target="_blank">Línea Hogar Plus</a></li>
-          <li><a href="catalogos/catalogo-servicios-2026.pdf" target="_blank">Tarifario de Servicios</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 class="footer-h4">Contacto Corporativo</h4>
+        <h4 class="footer-h4">Contacto Comercial</h4>
         <ul class="footer-links" style="font-size: 0.9rem;">
           <li style="color: #ffffff;"><i class="fa-brands fa-whatsapp" style="color: #25D366; margin-right: 8px;"></i> <strong>+57 304 3726578</strong></li>
           <li><i class="fa-solid fa-envelope" style="color: var(--orange-bright); margin-right: 8px;"></i> info@2solutions.com.co</li>
@@ -433,10 +419,11 @@
 
     <div class="footer-bar">
       <div>&copy; 2026 2SOLUTIONS S.A.S. — Experiencia | Creatividad | Compromiso.</div>
-      <div>Atención comercial directa por Ricardo (+57 304 3726578).</div>
+      <div>Plataforma de Comercio Corporativo & Catálogos Digitales.</div>
     </div>
   </footer>
 
   <script src="js/calculator.js"></script>
+  <script src="js/store.js"></script>
 </body>
 </html>

@@ -1,115 +1,109 @@
-// TIENDA VIRTUAL & CARRITO DE COTIZACIONES PARA 2 SOLUTIONS
+// TIENDA VIRTUAL & CARRITO DE COTIZACIONES B2B PARA 2 SOLUTIONS
+// POLÍTICA COMERCIAL: SIN PRECIOS PÚBLICOS - TODO SUJETO A CONFIRMACIÓN DE VALOR
+
 const STORE_PRODUCTS = [
   {
     id: 'prod_esfero_eco',
-    name: 'Esfero Ecológico Trigo & Bambú',
+    name: 'Esfero Ecológico Trigo & Bambú Reciclado',
     category: 'esferos',
-    price: 950,
-    desc: 'Bolígrafo promocional 100% biodegradable con pulsador y clip en fibra vegetal.',
+    desc: 'Bolígrafo promocional 100% biodegradable con pulsador y clip en fibra vegetal. Apto para tampografía y serigrafía.',
     img: 'assets/catalogo_samples/esfero_p7.jpg',
-    min: 100
+    min: 100,
+    specs: 'Mínimo: 100 unidades | Colores variados | Tinta negra o azul'
   },
   {
     id: 'prod_esfero_metal',
     name: 'Esfero Metálico Ejecutivo Premier',
     category: 'esferos',
-    price: 4200,
-    desc: 'Cuerpo de aluminio anodizado apto para grabado láser de alta definición.',
+    desc: 'Cuerpo de aluminio anodizado de alta gama, ideal para grabado láser de fibra permanente.',
     img: 'assets/catalogo_samples/prod_esferos_metal.jpg',
-    min: 50
+    min: 50,
+    specs: 'Mínimo: 50 unidades | Grabable con láser | Estuche opcional'
   },
   {
     id: 'prod_termo_sport',
-    name: 'Botilito Metálico Deportivo 650ml',
+    name: 'Botilito Metálico Deportivo 650ml en Acero',
     category: 'promocionales',
-    price: 11900,
-    desc: 'Acero inoxidable antiderrame, ideal para marcación láser o DTF UV 3D.',
+    desc: 'Acero inoxidable antiderrame de doble pared. Marcación sugerida: Láser de fibra o DTF UV 3D.',
     img: 'assets/simulador/base_termo.jpg',
-    min: 30
+    min: 30,
+    specs: 'Mínimo: 30 unidades | 650ml | Acero grado alimenticio'
   },
   {
     id: 'prod_agenda_bambu',
     name: 'Agenda Corporativa Bambú & Cuero PU',
     category: 'promocionales',
-    price: 13500,
-    desc: 'Hojas ecológicas rayadas con bolígrafo a juego y banda elástica de cierre.',
+    desc: 'Hojas ecológicas rayadas con bolígrafo a juego y banda elástica de cierre. Personalizable en bajo relieve o grabado.',
     img: 'assets/simulador/base_agenda.jpg',
-    min: 25
+    min: 25,
+    specs: 'Mínimo: 25 unidades | 80 hojas | Incluye bolígrafo'
   },
   {
     id: 'prod_bolsa_cambrel',
     name: 'Bolsa Ecológica Cambrel Gran Resistencia',
     category: 'promocionales',
-    price: 2800,
-    desc: 'Ideal para ferias, eventos corporativos y material publicitario masivo.',
+    desc: 'Bolsa reutilizable termo sellada para eventos masivos, ferias y material publicitario.',
     img: 'assets/catalogo_samples/prod_bolsas.jpg',
-    min: 100
+    min: 100,
+    specs: 'Mínimo: 100 unidades | 80 gramos | Serigrafía 1 a 4 tintas'
   },
   {
     id: 'prod_mug_ceramica',
-    name: 'Mug Cerámico 11oz Sublimable',
+    name: 'Mug Cerámico 11oz Sublimable Brillante',
     category: 'promocionales',
-    price: 5900,
-    desc: 'Cerámica de alta blancura y brillo para impresión full color fotográfica.',
+    desc: 'Cerámica triple A de máxima blancura. Impresión full color fotográfica horneada a alta temperatura.',
     img: 'assets/catalogo_samples/item_mug.jpg',
-    min: 36
+    min: 36,
+    specs: 'Mínimo: 36 unidades | 11oz | Sublimación full color'
   },
   {
     id: 'prod_sombrilla_golf',
     name: 'Sombrilla Doble Capa Antiviento Golf',
     category: 'promocionales',
-    price: 24500,
-    desc: 'Estructura en fibra de vidrio, apertura automática y estampado en serigrafía.',
+    desc: 'Estructura en fibra de vidrio reforzada con apertura automática y alta resistencia.',
     img: 'assets/catalogo_samples/item_sombrilla.jpg',
-    min: 20
+    min: 20,
+    specs: 'Mínimo: 20 unidades | 30 pulgadas | Mango ergonómico'
   },
   {
     id: 'prod_lonchera_bento',
     name: 'Lonchera Bento Hermética & Cubiertos',
     category: 'hogar',
-    price: 18900,
-    desc: 'Tres divisiones en paja de trigo eco-amigable con cubiertos incluidos.',
+    desc: 'Tres divisiones en paja de trigo eco-amigable con cubiertos incluidos y bandas de seguridad.',
     img: 'assets/catalogo_samples/hogar_p5.jpg',
-    min: 25
+    min: 25,
+    specs: 'Mínimo: 25 unidades | Libre de BPA | Apto microondas'
   },
   {
     id: 'prod_set_bar_bambu',
     name: 'Cofre Bar & Set Sacacorchos Bambú',
     category: 'hogar',
-    price: 34000,
-    desc: 'Cofre elegante de madera con accesorios metálicos para regalos ejecutivos.',
+    desc: 'Cofre elegante de madera con accesorios metálicos para regalos corporativos de fin de año.',
     img: 'assets/catalogo_samples/item_hogar_bambu.jpg',
-    min: 15
+    min: 15,
+    specs: 'Mínimo: 15 unidades | Madera natural | Grabado láser en tapa'
   },
   {
     id: 'prod_camiseta_estampada',
     name: 'Camisetas Cuello Redondo / Polo Estampadas',
     category: 'servicios',
-    price: 22000,
-    desc: 'Algodón 100% 180gr con estampado DTF Textil a todo color sin límite de diseño.',
+    desc: 'Algodón 100% 180gr con estampado DTF Textil o serigrafía a todo color sin límite de diseño.',
     img: 'assets/catalogo_samples/prod_bolsas.jpg',
-    min: 20
+    min: 20,
+    specs: 'Mínimo: 20 unidades | Tallas S a XXL | DTF / Serigrafía'
   },
   {
     id: 'prod_corte_laser_placas',
     name: 'Placas Metálicas & Corte Láser Acrílico',
     category: 'servicios',
-    price: 8500,
-    desc: 'Corte y grabado industrial para señalización, trofeos y placas de honor.',
+    desc: 'Corte y grabado industrial para señalización corporativa, trofeos y placas de reconocimiento.',
     img: 'assets/catalogo_samples/cover_servicios.jpg',
-    min: 10
+    min: 10,
+    specs: 'Mínimo: 10 unidades | Acrílico / MDF / Acero | Medidas a solicitud'
   }
 ];
 
 let cart = JSON.parse(localStorage.getItem('2solutions_cart') || '[]');
-
-function formatCOP(num) {
-  return new Intl.NumberFormat('es-CO', {
-    style: 'currency',
-    currency: 'COP',
-    maximumFractionDigits: 0
-  }).format(num);
-}
 
 function renderStore(filter = 'all') {
   const container = document.getElementById('storeGrid');
@@ -128,14 +122,23 @@ function renderStore(filter = 'all') {
       <div class="product-body">
         <h4 class="product-name">${item.name}</h4>
         <p class="product-desc">${item.desc}</p>
-        <div class="product-pricing">
-          <span class="price-label">Precio Unit. Ref:</span>
-          <span class="price-amount">${formatCOP(item.price)}</span>
+        
+        <!-- POLÍTICA SIN PRECIOS PÚBLICOS -->
+        <div class="product-pricing b2b-quote-only">
+          <div class="b2b-price-tag">
+            <i class="fa-solid fa-lock"></i>
+            <span>Valor Sujeto a Cotización</span>
+          </div>
+          <small class="b2b-specs">${item.specs}</small>
         </div>
+
         <div class="product-actions">
-          <input type="number" id="qty_${item.id}" class="qty-input-small" value="${item.min}" min="${item.min}" step="10">
+          <div class="qty-wrap">
+            <label class="qty-label">Cantidad:</label>
+            <input type="number" id="qty_${item.id}" class="qty-input-small" value="${item.min}" min="${item.min}" step="10">
+          </div>
           <button class="btn-add-quote" onclick="addToQuoteCart('${item.id}')">
-            <i class="fa-solid fa-cart-plus"></i> Cotizar
+            <i class="fa-solid fa-file-invoice"></i> Solicitar Valor
           </button>
         </div>
       </div>
@@ -175,20 +178,17 @@ function saveCart() {
 function updateCartUI() {
   const countBadge = document.getElementById('cartCountBadge');
   const itemsList = document.getElementById('cartItemsList');
-  const cartSubtotal = document.getElementById('cartDrawerSubtotal');
-  const cartIva = document.getElementById('cartDrawerIva');
-  const cartTotal = document.getElementById('cartDrawerTotal');
   const btnSendWhatsAppCart = document.getElementById('btnSendWhatsAppCart');
 
-  const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
   if (countBadge) countBadge.textContent = cart.length;
 
   if (itemsList) {
     if (cart.length === 0) {
       itemsList.innerHTML = `
-        <div style="text-align: center; color: #94a3b8; padding: 2rem 0;">
-          <i class="fa-solid fa-box-open" style="font-size: 2.5rem; margin-bottom: 1rem; color: #cbd5e1;"></i>
-          <p>Tu lista de cotización está vacía.<br>Agrega artículos de la tienda para cotizar.</p>
+        <div style="text-align: center; color: #94a3b8; padding: 2.5rem 0;">
+          <i class="fa-solid fa-file-signature" style="font-size: 2.8rem; margin-bottom: 1rem; color: #cbd5e1;"></i>
+          <p style="font-size: 1rem; color: #ffffff; font-weight: 700;">Tu lista de cotización está vacía</p>
+          <p style="font-size: 0.85rem;">Agrega los artículos que deseas cotizar para tu empresa y Ricardo te enviará la propuesta oficial.</p>
         </div>
       `;
     } else {
@@ -196,9 +196,10 @@ function updateCartUI() {
         <div class="cart-item">
           <div class="cart-item-info">
             <h4>${item.name}</h4>
-            <p>${item.qty} und x ${formatCOP(item.price)} = <strong>${formatCOP(item.qty * item.price)}</strong></p>
+            <p><i class="fa-solid fa-boxes-stacked"></i> Cantidad: <strong>${item.qty} und</strong></p>
+            <span class="cart-price-notice"><i class="fa-solid fa-calculator"></i> Pendiente confirmación de valor por volumen</span>
           </div>
-          <button class="cart-item-remove" onclick="removeFromCart('${item.id}')" title="Quitar">
+          <button class="cart-item-remove" onclick="removeFromCart('${item.id}')" title="Quitar de cotización">
             <i class="fa-solid fa-trash-can"></i>
           </button>
         </div>
@@ -206,26 +207,45 @@ function updateCartUI() {
     }
   }
 
-  const subtotal = cart.reduce((acc, item) => acc + (item.qty * item.price), 0);
-  const iva = Math.round(subtotal * 0.19);
-  const total = subtotal + iva;
-
-  if (cartSubtotal) cartSubtotal.textContent = formatCOP(subtotal);
-  if (cartIva) cartIva.textContent = formatCOP(iva);
-  if (cartTotal) cartTotal.textContent = formatCOP(total);
-
-  // WhatsApp formatted string
+  // Generación del mensaje a WhatsApp y registro en CRM
   if (btnSendWhatsAppCart) {
-    let msg = `¡Hola Ricardo (2 SOLUTIONS)! Deseo solicitar formalmente esta cotización empresarial:\n\n`;
-    cart.forEach(item => {
-      msg += `▪ ${item.name}\n  Cantidad: ${item.qty} und | Ref: ${formatCOP(item.qty * item.price)}\n`;
+    const user = (window.AuthManager && window.AuthManager.getCurrentUser()) || null;
+    let msg = `*SOLICITUD FORMAL DE COTIZACIÓN - 2 SOLUTIONS S.A.S.*\n`;
+    if (user) {
+      msg += `▪ *Cliente:* ${user.name}\n▪ *Empresa:* ${user.company || 'Corporativo'}\n▪ *Email:* ${user.email}\n\n`;
+    } else {
+      msg += `▪ *Solicitante:* Cliente Corporativo (Web)\n\n`;
+    }
+
+    msg += `*Artículos seleccionados para confirmación de precio:*\n`;
+    cart.forEach((item, idx) => {
+      msg += `${idx + 1}. ${item.name} -> *${item.qty} unidades*\n`;
     });
-    msg += `\n*Subtotal estimado:* ${formatCOP(subtotal)}`;
-    msg += `\n*IVA (19%):* ${formatCOP(iva)}`;
-    msg += `\n*TOTAL APROX.:* ${formatCOP(total)}`;
-    msg += `\n\n¿Podrías indicarme disponibilidad y tiempo de entrega en Barranquilla/Colombia?`;
+
+    msg += `\n*Nota comercial:* Todos los valores requieren confirmación oficial según técnicas de marcación y tiempo de entrega.\n`;
+    msg += `Contacto directo asignado: *Ricardo De La Espriella* (+57 304 3726578).`;
 
     btnSendWhatsAppCart.href = `https://wa.me/573043726578?text=${encodeURIComponent(msg)}`;
+
+    // Registrar en CRM
+    btnSendWhatsAppCart.onclick = function() {
+      if (cart.length > 0) {
+        try {
+          const quotes = JSON.parse(localStorage.getItem('2solutions_crm_quotes') || '[]');
+          quotes.unshift({
+            id: 'COT-' + Math.floor(1000 + Math.random() * 9000),
+            date: new Date().toISOString(),
+            clientName: user ? user.name : 'Visitante Web',
+            clientEmail: user ? user.email : 'No registrado',
+            company: user ? user.company : 'Por registrar',
+            itemsCount: cart.length,
+            items: cart.map(i => ({ name: i.name, qty: i.qty })),
+            status: 'Pendiente confirmación'
+          });
+          localStorage.setItem('2solutions_crm_quotes', JSON.stringify(quotes));
+        } catch(e) {}
+      }
+    };
   }
 }
 
@@ -243,7 +263,6 @@ document.addEventListener('DOMContentLoaded', () => {
   renderStore();
   updateCartUI();
 
-  // Filtros de categoría de la tienda
   const storeFilters = document.querySelectorAll('.store-filter-btn');
   storeFilters.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -253,7 +272,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Modal open / close handlers
   const floatingBtn = document.getElementById('floatingQuoteBtn');
   const btnCloseCart = document.getElementById('btnCloseCart');
   const cartModal = document.getElementById('cartModal');

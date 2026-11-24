@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>2 SOLUTIONS S.A.S. | Tienda Virtual & Catálogos Corporativos 2026</title>
+  <title>2 SOLUTIONS S.A.S. | Catálogo Oficial de Promocionales & Tienda B2B</title>
   <link rel="icon" type="image/png" href="assets/favicon.png">
 
-  <!-- Google Fonts Inter -->
+  <!-- Inter Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -14,20 +14,131 @@
   <!-- FontAwesome 6 Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <!-- Estilos Principales & Tienda Virtual -->
+  <!-- Estilos CSS -->
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/store.css">
+  <style>
+    /* ZONA VISIBLE DE LOGIN / REGISTRO */
+    .auth-prominent-section {
+      background: linear-gradient(135deg, rgba(13, 25, 44, 0.95), rgba(7, 16, 29, 0.98));
+      border: 1px solid var(--border-silver);
+      border-radius: var(--radius-lg);
+      padding: 3rem 2.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      box-shadow: var(--shadow-metallic);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .auth-benefits-list {
+      list-style: none;
+      margin-top: 1.5rem;
+    }
+    .auth-benefits-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1rem;
+      color: #cbd5e1;
+      font-size: 0.95rem;
+    }
+    .auth-benefits-list li i {
+      color: var(--orange-bright);
+      font-size: 1.2rem;
+    }
+    .auth-box-form {
+      background: rgba(5, 13, 26, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-md);
+      padding: 2.2rem;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+    }
+
+    /* POLÍTICAS COMERCIALES */
+    .policy-card {
+      background: var(--surface-card);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      padding: 2.2rem 1.8rem;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .policy-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: rgba(243, 112, 33, 0.15);
+      border: 1px solid rgba(243, 112, 33, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--orange-bright);
+      margin-bottom: 1.2rem;
+    }
+    .policy-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0.8rem;
+    }
+    .policy-desc {
+      font-size: 0.92rem;
+      color: #94a3b8;
+      line-height: 1.7;
+    }
+
+    /* UNICO CATALOGO HERO CARD */
+    .single-catalog-feature {
+      background: radial-gradient(circle at 30% 20%, #10243e 0%, #060e1a 100%);
+      border: 1px solid var(--border-silver);
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 3.5rem;
+      align-items: center;
+      box-shadow: var(--shadow-metallic);
+    }
+    .catalog-cover-large {
+      position: relative;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8);
+      border: 2px solid rgba(243, 112, 33, 0.4);
+    }
+    .catalog-cover-large img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .catalog-cover-large:hover img {
+      transform: scale(1.03);
+    }
+    @media (max-width: 900px) {
+      .auth-prominent-section, .single-catalog-feature {
+        grid-template-columns: 1fr;
+        padding: 2rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- BOTÓN FLOTANTE DE COTIZACIÓN / CARRITO -->
+  <!-- BOTÓN FLOTANTE DE COTIZACIÓN -->
   <div class="floating-quote-btn" id="floatingQuoteBtn">
-    <i class="fa-solid fa-cart-shopping"></i>
+    <i class="fa-solid fa-file-invoice"></i>
     <span>Ver Mi Cotización</span>
     <span class="cart-count-badge" id="cartCountBadge">0</span>
   </div>
 
-  <!-- MODAL / DRAWER DE COTIZACIÓN -->
+  <!-- MODAL DE COTIZACIÓN B2B -->
   <div class="cart-modal" id="cartModal">
     <div class="cart-drawer">
       <div class="cart-header">
@@ -35,33 +146,149 @@
         <button class="btn-close-cart" id="btnCloseCart">&times;</button>
       </div>
 
-      <div class="cart-items-list" id="cartItemsList">
-        <!-- Renderizado dinámico vía JS -->
-      </div>
+      <div class="cart-items-list" id="cartItemsList"></div>
 
       <div class="cart-footer">
-        <div class="cart-summary-line">
-          <span>Subtotal artículos:</span>
-          <strong id="cartDrawerSubtotal" style="color: #ffffff;">$ 0</strong>
-        </div>
-        <div class="cart-summary-line">
-          <span>IVA estimado (19%):</span>
-          <span id="cartDrawerIva">$ 0</span>
-        </div>
-        <div class="cart-summary-line total">
-          <span>TOTAL ESTIMADO:</span>
-          <span id="cartDrawerTotal">$ 0</span>
+        <div style="background: rgba(243, 112, 33, 0.1); border: 1px dashed rgba(243, 112, 33, 0.35); border-radius: 8px; padding: 1rem; margin-bottom: 1.2rem;">
+          <p style="font-size: 0.82rem; color: #ffab66; margin-bottom: 4px; font-weight: 700;">
+            <i class="fa-solid fa-circle-info"></i> Confirmación Oficial de Precios:
+          </p>
+          <p style="font-size: 0.78rem; color: #cbd5e1; line-height: 1.4;">
+            Todos los artículos se cotizan de acuerdo al volumen y la técnica de marcación requerida. Ricardo De La Espriella confirmará tu presupuesto formal.
+          </p>
         </div>
 
-        <div style="margin-top: 1.5rem;">
-          <a id="btnSendWhatsAppCart" href="#" target="_blank" class="btn btn-whatsapp" style="width: 100%; font-size: 1rem;">
-            <i class="fa-brands fa-whatsapp"></i> Solicitar Esta Cotización a Ricardo
+        <div>
+          <a id="btnSendWhatsAppCart" href="#" target="_blank" class="btn btn-whatsapp" style="width: 100%; font-size: 1rem; padding: 0.85rem;">
+            <i class="fa-brands fa-whatsapp"></i> Solicitar Valor a Ricardo (+57 304 3726578)
           </a>
           <p style="font-size: 0.72rem; color: #64748b; text-align: center; margin-top: 8px;">
-            Atención personalizada de Ricardo (+57 304 3726578). Envíos nacionales.
+            Atención comercial de 2 SOLUTIONS S.A.S. (NIT: 901.978.048-9).
           </p>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- PANEL DE ADMINISTRACIÓN & CRM MODAL -->
+  <div class="admin-modal-backdrop" id="adminModal">
+    <div class="admin-window">
+      <aside class="admin-sidebar">
+        <div class="admin-brand">
+          <h4><i class="fa-solid fa-chart-pie" style="color: var(--orange-bright);"></i> 2 SOLUTIONS CRM</h4>
+          <span style="font-size: 0.7rem; color: #94a3b8; text-transform: uppercase;">Portal de Gestión B2B</span>
+        </div>
+
+        <ul class="admin-nav-list">
+          <li>
+            <button class="admin-nav-item active" data-admin-tab="dashboard" onclick="AdminPanel.switchTab('dashboard')">
+              <i class="fa-solid fa-gauge-high"></i> Dashboard
+            </button>
+          </li>
+          <li>
+            <button class="admin-nav-item" data-admin-tab="companies" onclick="AdminPanel.switchTab('companies')">
+              <i class="fa-solid fa-building"></i> Empresas Clientes
+            </button>
+          </li>
+          <li>
+            <button class="admin-nav-item" data-admin-tab="contacts" onclick="AdminPanel.switchTab('contacts')">
+              <i class="fa-solid fa-users-gear"></i> Contactos Vinculados
+            </button>
+          </li>
+          <li>
+            <button class="admin-nav-item" data-admin-tab="quotes" onclick="AdminPanel.switchTab('quotes')">
+              <i class="fa-solid fa-file-invoice"></i> Cotizaciones Web
+            </button>
+          </li>
+        </ul>
+
+        <div style="padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.08);">
+          <button class="btn btn-steel" onclick="AdminPanel.close()" style="width: 100%; font-size: 0.85rem;">
+            <i class="fa-solid fa-xmark"></i> Cerrar Panel
+          </button>
+        </div>
+      </aside>
+
+      <main class="admin-content-area">
+        <header class="admin-top-header">
+          <div>
+            <h3 style="color:#ffffff; font-size: 1.25rem;">Panel de Control y CRM Corporativo</h3>
+            <span style="font-size:0.8rem; color:#94a3b8;">Superusuario: Israel Duarte | Administrador: Ricardo De La Espriella</span>
+          </div>
+          <div>
+            <span class="crm-status-tag active"><i class="fa-solid fa-circle-check"></i> Sesión Autorizada</span>
+          </div>
+        </header>
+
+        <div class="admin-view-pane active" id="pane_dashboard">
+          <div class="crm-stats-grid" id="adminStatsSummary"></div>
+          <div id="adminRecentActivity" style="background: rgba(13,25,44,0.8); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 1.5rem;"></div>
+        </div>
+
+        <div class="admin-view-pane" id="pane_companies">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <h3 style="color:#ffffff;">Directorio de Empresas Clientes</h3>
+            <button class="btn btn-orange" onclick="AdminPanel.showAddCompanyModal()">
+              <i class="fa-solid fa-plus"></i> Vincular Nueva Empresa
+            </button>
+          </div>
+          <table class="crm-table">
+            <thead>
+              <tr>
+                <th>Empresa / Razón Social</th>
+                <th>Ciudad</th>
+                <th>Sector</th>
+                <th>Usuarios Vinculados</th>
+                <th>Estado</th>
+                <th>Asignado a</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tableCompaniesBody"></tbody>
+          </table>
+        </div>
+
+        <div class="admin-view-pane" id="pane_contacts">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <h3 style="color:#ffffff;">Contactos y Usuarios por Empresa</h3>
+            <button class="btn btn-orange" onclick="AdminPanel.showAddContactModal()">
+              <i class="fa-solid fa-user-plus"></i> Agregar Contacto
+            </button>
+          </div>
+          <table class="crm-table">
+            <thead>
+              <tr>
+                <th>Nombre del Contacto</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Empresa Vinculada</th>
+                <th>Tipo Acceso</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tableContactsBody"></tbody>
+          </table>
+        </div>
+
+        <div class="admin-view-pane" id="pane_quotes">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <h3 style="color:#ffffff;">Solicitudes de Cotización Recibidas</h3>
+          </div>
+          <table class="crm-table">
+            <thead>
+              <tr>
+                <th>Radicado</th>
+                <th>Cliente</th>
+                <th>Empresa</th>
+                <th>Ítems Solicitados</th>
+                <th>Estado</th>
+                <th>WhatsApp</th>
+              </tr>
+            </thead>
+            <tbody id="tableQuotesBody"></tbody>
+          </table>
+        </div>
+      </main>
     </div>
   </div>
 
@@ -77,14 +304,16 @@
       </a>
 
       <ul class="nav-links">
-        <li><a href="#tienda" class="nav-link">Tienda Virtual</a></li>
-        <li><a href="#catalogos" class="nav-link">Catálogos 2026</a></li>
+        <li><a href="#catalogo-oficial" class="nav-link">Catálogo Oficial</a></li>
+        <li><a href="#tienda" class="nav-link">Tienda B2B</a></li>
         <li><a href="#simulador" class="nav-link">Simulador de Marca</a></li>
-        <li><a href="#servicios" class="nav-link">Servicios & Estampados</a></li>
+        <li><a href="#politicas" class="nav-link">Políticas Comerciales</a></li>
+        <li><a href="#acceso-clientes" class="nav-link" style="color: var(--orange-bright);"><i class="fa-solid fa-user-lock"></i> Mi Cuenta</a></li>
       </ul>
 
       <div class="nav-actions">
-        <a href="https://wa.me/573043726578?text=Hola%20Ricardo%20(2%20SOLUTIONS),%20me%20gustar%C3%ADa%20cotizar%20art%C3%ADculos%20promocionales" target="_blank" class="btn btn-whatsapp">
+        <div id="navAuthStatus"></div>
+        <a href="https://wa.me/573043726578?text=Hola%20Ricardo%20(2%20SOLUTIONS),%20deseo%20cotizar%20art%C3%ADculos%20promocionales" target="_blank" class="btn btn-whatsapp">
           <i class="fa-brands fa-whatsapp"></i> +57 304 3726578
         </a>
       </div>
@@ -96,183 +325,211 @@
     <div class="hero-grid">
       <div class="hero-content">
         <div class="hero-tag">
-          <i class="fa-solid fa-crown"></i> Nueva Tienda Virtual & Catálogos 2026
+          <i class="fa-solid fa-star"></i> Catálogo Oficial Exclusivo 2 SOLUTIONS Promocionales
         </div>
         <h1 class="hero-title">
-          Catálogo Interactivo & <span class="metallic-text-orange">Tienda Virtual</span> de Artículos Promocionales
+          Merchandising Corporativo & <span class="metallic-text-orange">Cotización Formal</span> para Empresas
         </h1>
         <p class="hero-desc">
-          Arma tu cotización en línea seleccionando productos al por mayor, prueba cómo lucirá tu marca en el simulador de acabados y recibe tu propuesta directa con <strong>Ricardo en 2 SOLUTIONS S.A.S.</strong>
+          Presentamos nuestro <strong>Catálogo Oficial 2 SOLUTIONS Promocionales</strong>. Todos los productos requieren confirmación oficial de valor según volumen, técnicas de marcación industrial y tiempos de despacho en Barranquilla y todo el país.
         </p>
 
         <div class="hero-btns">
-          <a href="#tienda" class="btn btn-orange">
-            <i class="fa-solid fa-bag-shopping"></i> Comprar / Cotizar en Tienda
+          <a href="#catalogo-oficial" class="btn btn-orange">
+            <i class="fa-solid fa-file-pdf"></i> Ver Catálogo Oficial PDF
           </a>
-          <a href="#catalogos" class="btn btn-steel">
-            <i class="fa-solid fa-file-pdf"></i> Descargar Catálogos Rediseñados
+          <a href="#acceso-clientes" class="btn btn-steel">
+            <i class="fa-solid fa-user-check"></i> Iniciar Sesión / Registrarse
           </a>
         </div>
       </div>
 
-      <!-- TARJETA LOGO CON REFLEJO -->
       <div class="hero-logo-box">
         <img src="assets/logo-exacto-2solutions.png" alt="2 SOLUTIONS Logo Metalizado" class="hero-main-logo">
         <div class="hero-logo-footer">
-          <span><i class="fa-solid fa-truck-fast"></i> Despachos a Todo el País</span>
-          <span><i class="fa-solid fa-award"></i> Venta Directa por Mayor</span>
+          <span><i class="fa-solid fa-truck-fast"></i> Cobertura Nacional</span>
+          <span><i class="fa-solid fa-shield-halved"></i> NIT: 901.978.048-9</span>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- TRUST STRIP -->
-  <section class="trust-strip">
-    <div class="trust-wrap">
-      <div class="trust-card">
-        <div class="trust-icon"><i class="fa-solid fa-file-shield"></i></div>
-        <div>
-          <div class="trust-title">NIT: 901.978.048-9</div>
-          <div class="trust-desc">2SOLUTIONS S.A.S.</div>
-        </div>
-      </div>
+  <!-- SECCIÓN: EL ÚNICO CATÁLOGO OFICIAL 2 SOLUTIONS PROMOCIONALES -->
+  <section id="catalogo-oficial" class="section">
+    <div class="section-title-wrap">
+      <span class="section-badge">Documento Principal</span>
+      <h2 class="section-heading">Catálogo Oficial 2 SOLUTIONS Promocionales</h2>
+      <p class="section-text">
+        El compendio definitivo de artículos promocionales, bolígrafos, termos, tecnología, agendas y soluciones de merchandising corporativo.
+      </p>
+    </div>
 
-      <div class="trust-card">
-        <div class="trust-icon"><i class="fa-brands fa-whatsapp"></i></div>
-        <div>
-          <div class="trust-title">+57 304 3726578</div>
-          <div class="trust-desc">Contacto Directo Ricardo</div>
-        </div>
+    <div class="single-catalog-feature">
+      <div class="catalog-cover-large">
+        <img src="assets/catalogo_samples/cover_promos.jpg" alt="Catálogo Oficial 2 Solutions Promocionales">
       </div>
-
-      <div class="trust-card">
-        <div class="trust-icon"><i class="fa-solid fa-shirt"></i></div>
-        <div>
-          <div class="trust-title">Taller de Estampados & Láser</div>
-          <div class="trust-desc">Marcación industrial directa</div>
+      <div>
+        <div style="display: inline-block; background: rgba(243, 112, 33, 0.2); color: var(--orange-bright); padding: 4px 12px; border-radius: 4px; font-weight: 800; font-size: 0.8rem; margin-bottom: 1rem; text-transform: uppercase;">
+          <i class="fa-solid fa-file-pdf"></i> Documento Oficial Completo
         </div>
-      </div>
+        <h3 style="font-size: 2.2rem; font-weight: 900; color: #ffffff; line-height: 1.2; margin-bottom: 1.2rem;">
+          Catálogo 2 SOLUTIONS Promocionales
+        </h3>
+        <p style="color: #94a3b8; font-size: 1.05rem; line-height: 1.8; margin-bottom: 1.8rem;">
+          Incluye toda la colección de botilitos de acero, esferos ejecutivos y ecológicos, morrales, sombrillas golf, agendas corporativas y técnicas de marcación directa (grabado láser, DTF UV 3D y serigrafía).
+        </p>
 
-      <div class="trust-card">
-        <div class="trust-icon"><i class="fa-solid fa-cart-flatbed-suitcase"></i></div>
-        <div>
-          <div class="trust-title">Cotizador Online</div>
-          <div class="trust-desc">Arma tu paquete y cotiza al instante</div>
+        <ul style="list-style: none; margin-bottom: 2.2rem;">
+          <li style="display: flex; align-items: center; gap: 10px; color: #e2e8f0; margin-bottom: 10px; font-weight: 600;">
+            <i class="fa-solid fa-check" style="color: var(--orange-bright);"></i> Todos los valores requieren confirmación de acuerdo al volumen solicitado.
+          </li>
+          <li style="display: flex; align-items: center; gap: 10px; color: #e2e8f0; margin-bottom: 10px; font-weight: 600;">
+            <i class="fa-solid fa-check" style="color: var(--orange-bright);"></i> Asesoría directa con Ricardo De La Espriella (+57 304 3726578).
+          </li>
+          <li style="display: flex; align-items: center; gap: 10px; color: #e2e8f0; font-weight: 600;">
+            <i class="fa-solid fa-check" style="color: var(--orange-bright);"></i> Despacho garantizado para empresas en Colombia.
+          </li>
+        </ul>
+
+        <div style="display: flex; gap: 1.2rem; flex-wrap: wrap;">
+          <a href="catalogos/catalogo-promocionales-2026.pdf" target="_blank" class="btn btn-orange" style="font-size: 1rem; padding: 0.9rem 1.8rem;">
+            <i class="fa-solid fa-download"></i> Descargar Catálogo Oficial (PDF)
+          </a>
+          <a href="#tienda" class="btn btn-steel" style="font-size: 1rem; padding: 0.9rem 1.8rem;">
+            <i class="fa-solid fa-cart-shopping"></i> Cotizar Artículos en Tienda
+          </a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- TIENDA VIRTUAL INTERACTIVA (E-COMMERCE B2B DE COTIZACIÓN) -->
+  <!-- ZONA VISIBLE Y DESTACADA DE LOGIN Y REGISTRO -->
+  <section id="acceso-clientes" class="section" style="background: rgba(10, 19, 34, 0.6);">
+    <div class="section-title-wrap">
+      <span class="section-badge">Portal Corporativo</span>
+      <h2 class="section-heading">Acceso de Clientes & Empresas</h2>
+      <p class="section-text">
+        Inicia sesión o regístrate con tu correo de empresa, cuenta de Google o Microsoft para gestionar tus cotizaciones.
+      </p>
+    </div>
+
+    <div class="auth-prominent-section">
+      <!-- Columna Izquierda: Información de Acceso -->
+      <div>
+        <h3 style="font-size: 1.8rem; font-weight: 800; color: #ffffff; margin-bottom: 0.8rem;">
+          Portal Exclusivo para Empresas y Clientes
+        </h3>
+        <p style="color: #94a3b8; line-height: 1.7; font-size: 0.95rem;">
+          Al registrarte o iniciar sesión con tu empresa podrás enviar solicitudes de cotización formal, recibir propuestas comerciales personalizadas y hacer seguimiento a tus pedidos de merchandising.
+        </p>
+
+        <ul class="auth-benefits-list">
+          <li>
+            <i class="fa-brands fa-google"></i>
+            <span>Acceso rápido con un solo clic mediante tu cuenta <strong>Google</strong>.</span>
+          </li>
+          <li>
+            <i class="fa-brands fa-microsoft"></i>
+            <span>Autenticación corporativa con cuenta <strong>Microsoft (Outlook / Office 365)</strong>.</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-envelope"></i>
+            <span>Registro personalizado con correo empresarial y datos de tu empresa.</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>Acceso privilegiado para Superusuario y Administrador al <strong>Panel CRM</strong>.</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Columna Derecha: Tarjeta de Acceso Visible -->
+      <div class="auth-box-form">
+        <h4 style="font-size: 1.3rem; font-weight: 800; color: #ffffff; margin-bottom: 1.2rem; text-align: center;">
+          Inicia Sesión o Regístrate
+        </h4>
+
+        <!-- Botón Google -->
+        <button class="btn-oauth-provider" onclick="AuthManager.loginWithGoogle()" style="width: 100%;">
+          <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" width="22" height="22" alt="Google">
+          <span>Ingresar con Google</span>
+        </button>
+
+        <!-- Botón Microsoft -->
+        <button class="btn-oauth-provider" onclick="AuthManager.loginWithMicrosoft()" style="width: 100%;">
+          <img src="https://cdn-icons-png.flaticon.com/512/732/732221.png" width="22" height="22" alt="Microsoft">
+          <span>Ingresar con Microsoft</span>
+        </button>
+
+        <div style="text-align: center; margin: 1.4rem 0; color: #64748b; font-size: 0.82rem; position: relative;">
+          <span>─── O con tu Correo Corporativo ───</span>
+        </div>
+
+        <!-- Formulario Registro / Login -->
+        <form id="prominentLoginForm" onsubmit="event.preventDefault(); handleProminentSubmit();">
+          <div style="margin-bottom: 10px;">
+            <input type="text" id="promUserName" class="sim-input" placeholder="Nombre completo del solicitante" required>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <input type="email" id="promUserEmail" class="sim-input" placeholder="correo@empresa.com" required>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <input type="text" id="promUserCompany" class="sim-input" placeholder="Nombre de tu Empresa / NIT" required>
+          </div>
+          <div style="margin-bottom: 15px;">
+            <input type="tel" id="promUserPhone" class="sim-input" placeholder="Teléfono de contacto (+57 ...)" required>
+          </div>
+          <button type="submit" class="btn btn-orange" style="width: 100%; font-size: 0.95rem; padding: 0.85rem;">
+            <i class="fa-solid fa-right-to-bracket"></i> Acceder / Registrar Mi Empresa
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIENDA VIRTUAL B2B (SIN PRECIOS) -->
   <section id="tienda" class="store-section">
     <div class="section-title-wrap">
-      <span class="section-badge">Catálogo Comercial en Vivo</span>
-      <h2 class="section-heading">Tienda Virtual de Productos Corporativos</h2>
+      <span class="section-badge">Selección de Artículos</span>
+      <h2 class="section-heading">Tienda Virtual B2B de Cotizaciones</h2>
       <p class="section-text">
-        Selecciona las cantidades que necesitas y agrega productos a tu cotización con un solo clic.
+        Selecciona los productos y cantidades que requiere tu empresa. Todo artículo pasa por confirmación formal de valor.
       </p>
+    </div>
+
+    <div class="store-notice-banner">
+      <span>
+        <i class="fa-solid fa-lock"></i>
+        <strong>Sin Precios Públicos:</strong> Los valores se definen exclusivamente según la escala de unidades, requerimientos de marcación y tiempo de entrega.
+      </span>
+      <span style="color: #cbd5e1; font-size: 0.85rem;">
+        Contacto directo: <strong>Ricardo (+57 304 3726578)</strong>
+      </span>
     </div>
 
     <!-- Filtros de Tienda -->
     <div class="store-filters">
       <button class="store-filter-btn active" data-store-cat="all">Todos los Productos</button>
       <button class="store-filter-btn" data-store-cat="esferos">Esferos & Escritura</button>
-      <button class="store-filter-btn" data-store-cat="promocionales">Termos, Agendas & Mugs</button>
+      <button class="store-filter-btn" data-store-cat="promocionales">Termos & Agendas</button>
       <button class="store-filter-btn" data-store-cat="hogar">Hogar & Loncheras</button>
       <button class="store-filter-btn" data-store-cat="servicios">Camisetas & Láser</button>
     </div>
 
-    <!-- Grilla de Productos Dinámica -->
-    <div class="store-grid" id="storeGrid">
-      <!-- Generado dinámicamente desde store.js -->
-    </div>
+    <div class="store-grid" id="storeGrid"></div>
   </section>
 
-  <!-- CATÁLOGOS OFICIALES REDISEÑADOS 2026 -->
-  <section id="catalogos" class="section">
+  <!-- SIMULADOR DE MARCACIÓN -->
+  <section id="simulador" class="section" style="background: rgba(10, 19, 34, 0.4);">
     <div class="section-title-wrap">
-      <span class="section-badge">Edición Rediseñada 2026</span>
-      <h2 class="section-heading">Catálogos Corporativos 2026 en PDF</h2>
+      <span class="section-badge">Visualizador Dinámico</span>
+      <h2 class="section-heading">Simulador de Marcación & Acabados</h2>
       <p class="section-text">
-        Descarga los catálogos actualizados con carátulas oficiales, índice técnico y especificaciones completas.
-      </p>
-    </div>
-
-    <div class="catalogs-grid">
-      <!-- 1. Catálogo Esferos -->
-      <div class="cat-card">
-        <div class="cat-thumb">
-          <img src="assets/catalogo_samples/cover_esferos.jpg" alt="Catálogo Esferos 2026">
-          <span class="cat-badge">35 Páginas</span>
-        </div>
-        <div class="cat-body">
-          <h3 class="cat-name">Catálogo Esferos 2026</h3>
-          <p class="cat-info">Bolígrafos ecológicos de paja de trigo, modelos metálicos para láser y sets ejecutivos.</p>
-          <a href="catalogos/catalogo-esferos-2026.pdf" target="_blank" class="btn btn-orange" style="width: 100%;">
-            <i class="fa-solid fa-file-arrow-down"></i> Descargar Catálogo PDF
-          </a>
-        </div>
-      </div>
-
-      <!-- 2. Catálogo Promocionales -->
-      <div class="cat-card">
-        <div class="cat-thumb">
-          <img src="assets/catalogo_samples/cover_promos.jpg" alt="Catálogo Promocionales 2026">
-          <span class="cat-badge">96 Páginas</span>
-        </div>
-        <div class="cat-body">
-          <h3 class="cat-name">Catálogo Promocionales 2026</h3>
-          <p class="cat-info">Agendas, botilitos térmicos, termos de acero, sombrillas golf, bolsas ecológicas y tecnología.</p>
-          <a href="catalogos/catalogo-promocionales-2026.pdf" target="_blank" class="btn btn-orange" style="width: 100%;">
-            <i class="fa-solid fa-file-arrow-down"></i> Descargar Catálogo PDF
-          </a>
-        </div>
-      </div>
-
-      <!-- 3. Catálogo Hogar Plus -->
-      <div class="cat-card">
-        <div class="cat-thumb">
-          <img src="assets/catalogo_samples/cover_hogar.jpg" alt="Catálogo Hogar Plus 2026">
-          <span class="cat-badge">26 Páginas</span>
-        </div>
-        <div class="cat-body">
-          <h3 class="cat-name">Catálogo Hogar Plus 2026</h3>
-          <p class="cat-info">Loncheras Bento ecológicas, cofres bar en bambú, sets para asados y artículos para el hogar.</p>
-          <a href="catalogos/catalogo-hogar-plus-2026.pdf" target="_blank" class="btn btn-orange" style="width: 100%;">
-            <i class="fa-solid fa-file-arrow-down"></i> Descargar Catálogo PDF
-          </a>
-        </div>
-      </div>
-
-      <!-- 4. Manual de Servicios y Tarifario -->
-      <div class="cat-card">
-        <div class="cat-thumb">
-          <img src="assets/catalogo_samples/cover_servicios.jpg" alt="Manual de Servicios 2026">
-          <span class="cat-badge">Tarifario</span>
-        </div>
-        <div class="cat-body">
-          <h3 class="cat-name">Manual de Servicios & Tarifario</h3>
-          <p class="cat-info">Especificaciones técnicas de áreas de marca, serigrafía, láser, DTF UV y precios mayoristas.</p>
-          <a href="catalogos/catalogo-servicios-2026.pdf" target="_blank" class="btn btn-orange" style="width: 100%;">
-            <i class="fa-solid fa-file-arrow-down"></i> Descargar Tarifario PDF
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SIMULADOR DE MARCACIÓN EN VIVO -->
-  <section id="simulador" class="section" style="background: rgba(10, 19, 34, 0.6);">
-    <div class="section-title-wrap">
-      <span class="section-badge">Prueba Visual en Línea</span>
-      <h2 class="section-heading">Simulador de Marcación en Tiempo Real</h2>
-      <p class="section-text">
-        Prueba cómo se verá tu logo o el nombre de tu empresa en diferentes acabados industriales.
+        Prueba cómo se verá el nombre o logo de tu empresa con grabado láser, DTF UV 3D o estampado textil.
       </p>
     </div>
 
     <div class="simulator-box">
-      <!-- Panel Controles -->
       <div>
         <h3 class="sim-controls-title">Configura tu Acabado</h3>
         <p class="sim-controls-desc">Prueba diferentes técnicas y tamaños sobre los artículos más solicitados.</p>
@@ -316,7 +573,6 @@
         </div>
       </div>
 
-      <!-- Preview Mockup -->
       <div class="sim-preview-panel">
         <div class="canvas-mockup-stage" id="mockupStage">
           <img id="simMockupImg" src="assets/simulador/base_termo.jpg" alt="Producto base" class="mockup-item-img">
@@ -340,37 +596,42 @@
     </div>
   </section>
 
-  <!-- SERVICIOS EXPANDIDOS -->
-  <section id="servicios" class="section">
+  <!-- SECCIÓN: POLÍTICAS COMERCIALES Y DE SERVICIO -->
+  <section id="politicas" class="section">
     <div class="section-title-wrap">
-      <span class="section-badge">Taller y Producción Directa</span>
-      <h2 class="section-heading">Estampados, Corte Láser & Branding</h2>
-      <p class="section-text">Contamos con infraestructura técnica para abastecer a tu empresa en Colombia.</p>
+      <span class="section-badge">Garantía y Condiciones</span>
+      <h2 class="section-heading">Políticas Comerciales & de Servicio</h2>
+      <p class="section-text">
+        Transparencia y claridad en cada proceso comercial con 2 SOLUTIONS S.A.S.
+      </p>
     </div>
 
-    <div class="services-strip-grid">
-      <div class="service-box">
-        <div class="service-icon"><i class="fa-solid fa-shirt"></i></div>
-        <h3 class="service-title">Estampado de Camisetas</h3>
-        <p class="service-desc">DTF Textil de alta durabilidad, serigrafía y vinilo termotransferible en camisetas y dotaciones.</p>
+    <div style="max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+      <!-- Política 1: Cotizaciones y Precios -->
+      <div class="policy-card">
+        <div class="policy-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+        <h3 class="policy-title">Confirmación de Valores</h3>
+        <p class="policy-desc">
+          En cumplimiento con nuestra política B2B, ningún producto cuenta con precio fijo público. Todo valor unitario está sujeto a confirmación oficial según la cantidad solicitada, la disponibilidad en bodega y la técnica de personalización o estampado elegida.
+        </p>
       </div>
 
-      <div class="service-box">
-        <div class="service-icon"><i class="fa-solid fa-crosshairs"></i></div>
-        <h3 class="service-title">Corte Láser & Grabado</h3>
-        <p class="service-desc">Corte y grabado sobre MDF, acrílico, placas metálicas y estuches de madera de lujo.</p>
+      <!-- Política 2: Despachos y Cobertura -->
+      <div class="policy-card">
+        <div class="policy-icon"><i class="fa-solid fa-truck-ramp-box"></i></div>
+        <h3 class="policy-title">Despachos & Tiempos de Entrega</h3>
+        <p class="policy-desc">
+          Realizamos envíos a nivel local en Barranquilla y despachos garantizados a todo el territorio colombiano. Los tiempos de producción y entrega se acuerdan formalmente con el cliente a partir de la aprobación final del montaje virtual de marca.
+        </p>
       </div>
 
-      <div class="service-box">
-        <div class="service-icon"><i class="fa-solid fa-panorama"></i></div>
-        <h3 class="service-title">Impresión Gran Formato</h3>
-        <p class="service-desc">Pendones, vinilos adhesivos con laminado mate o brillante y microperforados para publicidad.</p>
-      </div>
-
-      <div class="service-box">
-        <div class="service-icon"><i class="fa-solid fa-pen-ruler"></i></div>
-        <h3 class="service-title">Branding Corporativo</h3>
-        <p class="service-desc">Vectorización de logotipos, adaptación técnica para maquinaria de marcación y diseño gráfico.</p>
+      <!-- Política 3: Facturación y Datos -->
+      <div class="policy-card">
+        <div class="policy-icon"><i class="fa-solid fa-file-contract"></i></div>
+        <h3 class="policy-title">Garantía & Datos Personales</h3>
+        <p class="policy-desc">
+          2 SOLUTIONS S.A.S. cuenta con NIT 901.978.048-9 y está habilitada ante la DIAN para emisión de factura electrónica. La información de las empresas y contactos registrados se administra bajo estricta confidencialidad para la gestión comercial y soporte directo.
+        </p>
       </div>
     </div>
   </section>
@@ -382,36 +643,36 @@
         <img src="assets/logo-exacto-2solutions.png" alt="2 SOLUTIONS" style="max-width: 200px; margin-bottom: 1rem;">
         <p class="footer-p">
           <strong>2SOLUTIONS S.A.S.</strong><br>
-          Comercialización de artículos promocionales, regalos empresariales, dotaciones, estampado textil, corte láser y soluciones integrales de marca.
+          Comercialización de artículos promocionales corporativos, estampado de camisetas, corte láser y soluciones integrales de marca.
         </p>
       </div>
 
       <div>
-        <h4 class="footer-h4">Líneas de Catálogo</h4>
+        <h4 class="footer-h4">Catálogo Oficial</h4>
         <ul class="footer-links">
-          <li><a href="catalogos/catalogo-esferos-2026.pdf" target="_blank">Catálogo Esferos 2026</a></li>
-          <li><a href="catalogos/catalogo-promocionales-2026.pdf" target="_blank">Catálogo Promocionales 2026</a></li>
-          <li><a href="catalogos/catalogo-hogar-plus-2026.pdf" target="_blank">Catálogo Hogar Plus 2026</a></li>
-          <li><a href="catalogos/catalogo-servicios-2026.pdf" target="_blank">Tarifario de Servicios</a></li>
+          <li><a href="catalogos/catalogo-promocionales-2026.pdf" target="_blank"><i class="fa-solid fa-file-pdf" style="color: var(--orange-bright);"></i> Catálogo Promocionales Oficial</a></li>
+          <li><a href="#tienda">Tienda Virtual B2B</a></li>
+          <li><a href="#simulador">Simulador de Marcación</a></li>
+          <li><a href="#politicas">Políticas Comerciales</a></li>
         </ul>
       </div>
 
       <div>
-        <h4 class="footer-h4">Servicios</h4>
+        <h4 class="footer-h4">Acceso</h4>
         <ul class="footer-links">
-          <li><a href="#servicios">Estampado de Camisetas</a></li>
-          <li><a href="#servicios">Corte Láser & Placas</a></li>
-          <li><a href="#servicios">Impresión Gran Formato</a></li>
-          <li><a href="#servicios">Branding Corporativo</a></li>
+          <li><a href="#acceso-clientes">Iniciar Sesión con Google</a></li>
+          <li><a href="#acceso-clientes">Iniciar Sesión con Microsoft</a></li>
+          <li><a href="#acceso-clientes">Registro Corporativo</a></li>
+          <li><a href="javascript:void(0)" onclick="AdminPanel.open()" style="color: var(--orange-bright); font-weight: 700;">Acceso Panel CRM</a></li>
         </ul>
       </div>
 
       <div>
         <h4 class="footer-h4">Contacto Comercial</h4>
         <ul class="footer-links" style="font-size: 0.9rem;">
-          <li style="color: #ffffff;"><i class="fa-brands fa-whatsapp" style="color: #25D366; margin-right: 8px;"></i> <strong>+57 304 3726578</strong></li>
+          <li style="color: #ffffff;"><i class="fa-brands fa-whatsapp" style="color: #25D366; margin-right: 8px;"></i> <strong>+57 304 3726578</strong> (Ricardo)</li>
           <li><i class="fa-solid fa-envelope" style="color: var(--orange-bright); margin-right: 8px;"></i> info@2solutions.com.co</li>
-          <li><i class="fa-solid fa-location-dot" style="color: var(--orange-bright); margin-right: 8px;"></i> Barranquilla, Colombia</li>
+          <li><i class="fa-solid fa-location-dot" style="color: var(--orange-bright); margin-right: 8px;"></i> Barranquilla, Atlántico</li>
           <li><i class="fa-solid fa-id-card" style="color: var(--orange-bright); margin-right: 8px;"></i> NIT: 901.978.048-9</li>
         </ul>
       </div>
@@ -419,11 +680,26 @@
 
     <div class="footer-bar">
       <div>&copy; 2026 2SOLUTIONS S.A.S. — Experiencia | Creatividad | Compromiso.</div>
-      <div>Plataforma de Comercio Corporativo & Catálogos Digitales.</div>
+      <div>Atención Comercial: Ricardo De La Espriella (+57 304 3726578).</div>
     </div>
   </footer>
 
-  <script src="js/calculator.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/crm.js"></script>
   <script src="js/store.js"></script>
+  <script src="js/calculator.js"></script>
+
+  <script>
+    function handleProminentSubmit() {
+      const name = document.getElementById('promUserName').value;
+      const email = document.getElementById('promUserEmail').value;
+      const company = document.getElementById('promUserCompany').value;
+      const phone = document.getElementById('promUserPhone').value;
+      AuthManager.loginWithEmail(email, '123456', name, company, phone);
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      AuthManager.updateAuthNavUI();
+    });
+  </script>
 </body>
 </html>

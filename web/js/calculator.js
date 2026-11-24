@@ -1,9 +1,11 @@
+// SIMULADOR DE MARCACIÓN Y SOLICITUD DE COTIZACIÓN FORMAL (SIN PRECIOS FIJOS)
+// 2 SOLUTIONS S.A.S.
+
 document.addEventListener('DOMContentLoaded', () => {
   const WHATSAPP_PHONE = '573043726578';
 
   // 1. SIMULADOR DE MARCACIÓN (INTERACTIVO)
   const simProductSelect = document.getElementById('simProduct');
-  const simTechniqueSelect = document.getElementById('simTechnique');
   const simCustomText = document.getElementById('simCustomText');
   const simLogoSize = document.getElementById('simLogoSize');
   const simMockupImg = document.getElementById('simMockupImg');
@@ -18,23 +20,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const productsDatabase = {
     'termo': {
       name: 'Termo Metálico / Botilito Acero 650ml',
-      img: 'assets/simulador/base_termo.jpg',
-      ideal: 'laser'
+      img: 'assets/simulador/base_termo.jpg'
     },
     'esfero': {
       name: 'Esfero Ejecutivo Metálico',
-      img: 'assets/simulador/base_esfero.jpg',
-      ideal: 'laser'
+      img: 'assets/simulador/base_esfero.jpg'
     },
     'camiseta': {
       name: 'Camiseta de Algodón / Textil Corporativo',
-      img: 'assets/catalogo_samples/prod_bolsas.jpg', // Representación textil
-      ideal: 'estampado'
+      img: 'assets/catalogo_samples/prod_bolsas.jpg'
     },
     'agenda': {
       name: 'Agenda & Libreta Corporativa Bambú/Cuero',
-      img: 'assets/simulador/base_agenda.jpg',
-      ideal: 'dtfuv'
+      img: 'assets/simulador/base_agenda.jpg'
     }
   };
 
@@ -64,27 +62,23 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentTechnique = 'laser';
 
   function updateSimulator() {
-    const prodKey = simProductSelect.value;
+    const prodKey = simProductSelect ? simProductSelect.value : 'termo';
     const prod = productsDatabase[prodKey] || productsDatabase['termo'];
 
-    // Cambiar imagen base del artículo
     if (simMockupImg && prod.img) {
       simMockupImg.src = prod.img;
     }
 
-    // Actualizar texto personalizado
-    const textVal = simCustomText.value.trim();
+    const textVal = simCustomText ? simCustomText.value.trim() : '2 SOLUTIONS';
     if (simBrandText) {
       simBrandText.textContent = textVal || 'TU EMPRESA';
     }
 
-    // Tamaño del logo simulado
-    const sizeVal = simLogoSize.value;
+    const sizeVal = simLogoSize ? simLogoSize.value : 120;
     if (simMarkingImg) {
       simMarkingImg.style.width = `${sizeVal}px`;
     }
 
-    // Aplicar técnica visual
     const tech = techniquesDatabase[currentTechnique];
     if (simMarkingOverlay && tech) {
       simMarkingOverlay.className = `marking-overlay ${tech.cssClass}`;
@@ -92,20 +86,21 @@ document.addEventListener('DOMContentLoaded', () => {
       if (simTechDesc) simTechDesc.textContent = tech.desc;
     }
 
-    // Preparar mensaje WhatsApp con la simulación
     if (btnShareSim) {
-      const msg = encodeURIComponent(
-        `¡Hola 2 SOLUTIONS! Estuve en su simulador de marcación:\n\n` +
-        `▪ *Artículo probado:* ${prod.name}\n` +
-        `▪ *Técnica simulada:* ${tech.name}\n` +
-        `▪ *Texto/Marca:* ${textVal || '2 SOLUTIONS'}\n\n` +
-        `¿Podrían cotizarme este tipo de marcación para mi empresa?`
-      );
-      btnShareSim.href = `https://wa.me/${WHATSAPP_PHONE}?text=${msg}`;
+      const user = window.AuthManager ? window.AuthManager.getCurrentUser() : null;
+      let msg = `*SIMULADOR DE MARCACIÓN - 2 SOLUTIONS S.A.S.*\n`;
+      if (user) {
+        msg += `▪ *Cliente:* ${user.name} (${user.company || 'Empresa'})\n`;
+      }
+      msg += `▪ *Artículo simulado:* ${prod.name}\n` +
+             `▪ *Técnica aplicada:* ${tech.name}\n` +
+             `▪ *Texto / Logo probado:* "${textVal || '2 SOLUTIONS'}"\n\n` +
+             `Solicito confirmación de valor y tiempo de producción a Ricardo De La Espriella (+57 304 3726578).`;
+
+      btnShareSim.href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msg)}`;
     }
   }
 
-  // Escuchadores de botones de técnica
   styleButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       styleButtons.forEach(b => b.classList.remove('active'));
@@ -119,76 +114,36 @@ document.addEventListener('DOMContentLoaded', () => {
   if (simCustomText) simCustomText.addEventListener('input', updateSimulator);
   if (simLogoSize) simLogoSize.addEventListener('input', updateSimulator);
 
-  // Inicializar simulador
   updateSimulator();
 
-  // 2. COTIZADOR RÁPIDO
+  // 2. FORMULARIO DE COTIZACIÓN RÁPIDA (B2B SIN PRECIOS)
   const calcProduct = document.getElementById('calcProduct');
   const calcQty = document.getElementById('calcQty');
   const calcTech = document.getElementById('calcTech');
-  const calcSubtotal = document.getElementById('calcSubtotal');
-  const calcIva = document.getElementById('calcIva');
-  const calcTotal = document.getElementById('calcTotal');
   const btnSendQuote = document.getElementById('btnSendQuote');
 
-  const pricing = {
-    'esferos': { base: 1200, name: 'Esferos Corporativos' },
-    'camisetas': { base: 19500, name: 'Estampado de Camisetas' },
-    'termos': { base: 14500, name: 'Botilitos / Termos de Acero' },
-    'corte_laser': { base: 8500, name: 'Corte Láser & Placas' },
-    'impresion': { base: 18000, name: 'Gran Formato & Vinilos' },
-    'agendas': { base: 13500, name: 'Agendas Ejecutivas' }
-  };
-
-  const techCosts = {
-    'laser': 1100,
-    'dtf': 2200,
-    'estampado': 1800,
-    'screen': 750,
-    'sublimacion': 1400
-  };
-
-  function updateQuote() {
-    if (!calcProduct) return;
-    const prodKey = calcProduct.value;
+  function updateFastQuote() {
+    if (!btnSendQuote || !calcProduct) return;
+    const prodName = calcProduct.options[calcProduct.selectedIndex].text;
     const qty = Math.max(1, parseInt(calcQty.value) || 100);
-    const techKey = calcTech.value;
+    const techName = calcTech.options[calcTech.selectedIndex].text;
+    const user = window.AuthManager ? window.AuthManager.getCurrentUser() : null;
 
-    const p = pricing[prodKey] || pricing['esferos'];
-    const t = techCosts[techKey] || 1000;
-
-    let discount = 1.0;
-    if (qty >= 1000) discount = 0.82;
-    else if (qty >= 500) discount = 0.88;
-    else if (qty >= 200) discount = 0.94;
-
-    const unitPrice = Math.round((p.base + t) * discount);
-    const subtotal = unitPrice * qty;
-    const iva = Math.round(subtotal * 0.19);
-    const total = subtotal + iva;
-
-    function formatCOP(n) {
-      return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(n);
+    let msg = `*SOLICITUD DE COTIZACIÓN PERSONALIZADA - 2 SOLUTIONS*\n`;
+    if (user) {
+      msg += `▪ *Empresa / Cliente:* ${user.name} - ${user.company || 'Corporativo'}\n`;
+      msg += `▪ *Email de contacto:* ${user.email}\n`;
     }
+    msg += `▪ *Producto:* ${prodName}\n` +
+           `▪ *Cantidad estimada:* ${qty} unidades\n` +
+           `▪ *Técnica de marca:* ${techName}\n\n` +
+           `Por favor confirmar valor unitario por escala y disponibilidad de despacho.`;
 
-    if (calcSubtotal) calcSubtotal.textContent = formatCOP(subtotal);
-    if (calcIva) calcIva.textContent = formatCOP(iva);
-    if (calcTotal) calcTotal.textContent = formatCOP(total);
-
-    if (btnSendQuote) {
-      const qMsg = encodeURIComponent(
-        `¡Hola Ricardo / 2 SOLUTIONS! Me gustaría formalizar esta cotización:\n\n` +
-        `▪ *Servicio/Producto:* ${p.name}\n` +
-        `▪ *Cantidad:* ${qty} und\n` +
-        `▪ *Total estimado:* ${formatCOP(total)} (IVA inc)\n\n` +
-        `Quedo atento para coordinar arte gráfico y entrega.`
-      );
-      btnSendQuote.href = `https://wa.me/${WHATSAPP_PHONE}?text=${qMsg}`;
-    }
+    btnSendQuote.href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msg)}`;
   }
 
-  if (calcProduct) calcProduct.addEventListener('change', updateQuote);
-  if (calcQty) calcQty.addEventListener('input', updateQuote);
-  if (calcTech) calcTech.addEventListener('change', updateQuote);
-  updateQuote();
+  if (calcProduct) calcProduct.addEventListener('change', updateFastQuote);
+  if (calcQty) calcQty.addEventListener('input', updateFastQuote);
+  if (calcTech) calcTech.addEventListener('change', updateFastQuote);
+  updateFastQuote();
 });

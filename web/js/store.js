@@ -188,7 +188,7 @@ function updateCartUI() {
         <div style="text-align: center; color: #94a3b8; padding: 2.5rem 0;">
           <i class="fa-solid fa-file-signature" style="font-size: 2.8rem; margin-bottom: 1rem; color: #cbd5e1;"></i>
           <p style="font-size: 1rem; color: #ffffff; font-weight: 700;">Tu lista de cotización está vacía</p>
-          <p style="font-size: 0.85rem;">Agrega los artículos que deseas cotizar para tu empresa y Ricardo te enviará la propuesta oficial.</p>
+          <p style="font-size: 0.85rem;">Agrega los artículos que deseas cotizar para tu empresa y nuestro equipo comercial te enviará la propuesta oficial.</p>
         </div>
       `;
     } else {
@@ -223,7 +223,7 @@ function updateCartUI() {
     });
 
     msg += `\n*Nota comercial:* Todos los valores requieren confirmación oficial según técnicas de marcación y tiempo de entrega.\n`;
-    msg += `Contacto directo asignado: *Ricardo De La Espriella* (+57 304 3726578).`;
+    msg += `Contacto de atención comercial: *2 SOLUTIONS S.A.S.* (+57 304 3726578).`;
 
     btnSendWhatsAppCart.href = `https://wa.me/573043726578?text=${encodeURIComponent(msg)}`;
 

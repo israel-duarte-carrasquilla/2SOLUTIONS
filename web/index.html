@@ -15,8 +15,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <!-- Estilos CSS -->
-  <link rel="stylesheet" href="css/styles.css?v=2026.2">
-  <link rel="stylesheet" href="css/store.css?v=2026.2">
+  <link rel="stylesheet" href="css/styles.css?v=2026.3">
+  <link rel="stylesheet" href="css/store.css?v=2026.3">
   <style>
     /* Asegurar que el modal de admin esté oculto por defecto */
     #adminModal:not(.active) {
@@ -135,10 +135,10 @@
 </head>
 <body>
 
-  <!-- BOTÓN FLOTANTE DE COTIZACIÓN -->
-  <div class="floating-quote-btn" id="floatingQuoteBtn">
+  <!-- BOTÓN FLOTANTE DE COTIZACIÓN ANIMADO -->
+  <div class="floating-quote-btn" id="floatingQuoteBtn" title="Ver mi cotización">
     <i class="fa-solid fa-file-invoice"></i>
-    <span>Ver Mi Cotización</span>
+    <span class="quote-btn-text">Ver Mi Cotización</span>
     <span class="cart-count-badge" id="cartCountBadge">0</span>
   </div>
 
@@ -158,13 +158,13 @@
             <i class="fa-solid fa-circle-info"></i> Confirmación Oficial de Precios:
           </p>
           <p style="font-size: 0.78rem; color: #cbd5e1; line-height: 1.4;">
-            Todos los artículos se cotizan de acuerdo al volumen y la técnica de marcación requerida. Ricardo De La Espriella confirmará tu presupuesto formal.
+            Todos los artículos se cotizan de acuerdo al volumen y la técnica de marcación requerida. Nuestro equipo comercial confirmará tu presupuesto formal.
           </p>
         </div>
 
         <div>
           <a id="btnSendWhatsAppCart" href="#" target="_blank" class="btn btn-whatsapp" style="width: 100%; font-size: 1rem; padding: 0.85rem;">
-            <i class="fa-brands fa-whatsapp"></i> Solicitar Valor a Ricardo (+57 304 3726578)
+            <i class="fa-brands fa-whatsapp"></i> Solicitar Valor a Comercial (+57 304 3726578)
           </a>
           <p style="font-size: 0.72rem; color: #64748b; text-align: center; margin-top: 8px;">
             Atención comercial de 2 SOLUTIONS S.A.S. (NIT: 901.978.048-9).
@@ -217,7 +217,7 @@
         <header class="admin-top-header">
           <div>
             <h3 style="color:#ffffff; font-size: 1.25rem;">Panel de Control y CRM Corporativo</h3>
-            <span style="font-size:0.8rem; color:#94a3b8;">Superusuario: Israel Duarte | Administrador: Ricardo De La Espriella</span>
+            <span style="font-size:0.8rem; color:#94a3b8;">Superusuario: Israel Duarte | Acceso Administrativo 2 SOLUTIONS</span>
           </div>
           <div>
             <span class="crm-status-tag active"><i class="fa-solid fa-circle-check"></i> Sesión Autorizada</span>
@@ -230,19 +230,48 @@
         </div>
 
         <div class="admin-view-pane" id="pane_companies">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-            <h3 style="color:#ffffff;">Directorio de Empresas Clientes</h3>
-            <button class="btn btn-orange" onclick="AdminPanel.showAddCompanyModal()">
-              <i class="fa-solid fa-plus"></i> Vincular Nueva Empresa
-            </button>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 10px;">
+            <div>
+              <h3 style="color:#ffffff; margin-bottom: 4px;">Directorio de Empresas Clientes & Prospectos</h3>
+              <span id="crmCompanyPageInfo" style="font-size: 0.82rem; color: #94a3b8;">Cargando directorio...</span>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button class="btn btn-steel" onclick="AdminPanel.exportToCSV()" style="font-size: 0.85rem;">
+                <i class="fa-solid fa-file-excel" style="color: #25D366;"></i> Exportar CSV
+              </button>
+              <label class="btn btn-steel" style="font-size: 0.85rem; cursor: pointer; margin: 0;">
+                <i class="fa-solid fa-file-arrow-up" style="color: var(--orange-bright);"></i> Importar CSV
+                <input type="file" id="crmCsvFileInput" accept=".csv" style="display: none;" onchange="AdminPanel.importFromCSV(event)">
+              </label>
+              <button class="btn btn-orange" onclick="AdminPanel.showAddCompanyModal()" style="font-size: 0.85rem;">
+                <i class="fa-solid fa-plus"></i> Nueva Empresa
+              </button>
+            </div>
           </div>
+
+          <!-- Barra de Búsqueda y Paginación -->
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1rem; background: rgba(5,13,26,0.5); padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08);">
+            <div style="display: flex; align-items: center; gap: 10px; flex-grow: 1; max-width: 450px;">
+              <i class="fa-solid fa-magnifying-glass" style="color: #94a3b8;"></i>
+              <input type="text" id="crmCompanySearch" class="sim-input" placeholder="Buscar por empresa, NIT, ciudad o sector..." oninput="AdminPanel.filterCompanies()" style="padding: 0.5rem 0.8rem; font-size: 0.88rem; width: 100%;">
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-steel" onclick="AdminPanel.prevCompanyPage()" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">
+                <i class="fa-solid fa-chevron-left"></i> Anterior
+              </button>
+              <button class="btn btn-steel" onclick="AdminPanel.nextCompanyPage()" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">
+                Siguiente <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+
           <table class="crm-table">
             <thead>
               <tr>
                 <th>Empresa / Razón Social</th>
                 <th>Ciudad</th>
                 <th>Sector</th>
-                <th>Usuarios Vinculados</th>
+                <th>Usuarios / Contacto</th>
                 <th>Estado</th>
                 <th>Asignado a</th>
                 <th>Acciones</th>
@@ -317,7 +346,7 @@
 
       <div class="nav-actions">
         <div id="navAuthStatus"></div>
-        <a href="https://wa.me/573043726578?text=Hola%20Ricardo%20(2%20SOLUTIONS),%20deseo%20cotizar%20art%C3%ADculos%20promocionales" target="_blank" class="btn btn-whatsapp">
+        <a href="https://wa.me/573043726578?text=Hola%20(2%20SOLUTIONS),%20deseo%20cotizar%20art%C3%ADculos%20promocionales" target="_blank" class="btn btn-whatsapp">
           <i class="fa-brands fa-whatsapp"></i> +57 304 3726578
         </a>
       </div>
@@ -388,7 +417,7 @@
             <i class="fa-solid fa-check" style="color: var(--orange-bright);"></i> Todos los valores requieren confirmación de acuerdo al volumen solicitado.
           </li>
           <li style="display: flex; align-items: center; gap: 10px; color: #e2e8f0; margin-bottom: 10px; font-weight: 600;">
-            <i class="fa-solid fa-check" style="color: var(--orange-bright);"></i> Asesoría directa con Ricardo De La Espriella (+57 304 3726578).
+            <i class="fa-solid fa-check" style="color: var(--orange-bright);"></i> Asesoría directa con nuestro equipo comercial (+57 304 3726578).
           </li>
           <li style="display: flex; align-items: center; gap: 10px; color: #e2e8f0; font-weight: 600;">
             <i class="fa-solid fa-check" style="color: var(--orange-bright);"></i> Despacho garantizado para empresas en Colombia.
@@ -507,7 +536,7 @@
         <strong>Sin Precios Públicos:</strong> Los valores se definen exclusivamente según la escala de unidades, requerimientos de marcación y tiempo de entrega.
       </span>
       <span style="color: #cbd5e1; font-size: 0.85rem;">
-        Contacto directo: <strong>Ricardo (+57 304 3726578)</strong>
+        Contacto directo: <strong>Atención Comercial (+57 304 3726578)</strong>
       </span>
     </div>
 
@@ -548,6 +577,25 @@
           </select>
         </div>
 
+        <!-- SELECTOR DE LADO / ÁREA DE GRABADO DEL TERMO -->
+        <div class="sim-group" id="simBottleSideGroup">
+          <label class="sim-label"><i class="fa-solid fa-arrows-to-circle" style="color: var(--orange-bright);"></i> Área / Lado de Grabado en el Termo</label>
+          <div class="style-buttons" style="grid-template-columns: repeat(3, 1fr);">
+            <button type="button" class="btn-side-choice active" data-side="central">
+              <i class="fa-solid fa-align-center"></i> Logo Central
+            </button>
+            <button type="button" class="btn-side-choice" data-side="superior">
+              <i class="fa-solid fa-arrow-up"></i> Logo Superior
+            </button>
+            <button type="button" class="btn-side-choice" data-side="inferior">
+              <i class="fa-solid fa-arrow-down"></i> Logo Inferior
+            </button>
+          </div>
+          <span style="font-size: 0.75rem; color: #94a3b8; display: block; margin-top: 4px;">
+            Elige en qué parte o cara del termo deseas ubicar el grabado según el plano técnico del catálogo.
+          </span>
+        </div>
+
         <div class="sim-group">
           <label class="sim-label">Técnica de Acabado</label>
           <div class="style-buttons">
@@ -566,8 +614,26 @@
           </div>
         </div>
 
+        <!-- CARGAR LOGO PROPIO Y QUITAR FONDO -->
         <div class="sim-group">
-          <label class="sim-label">Nombre de Marca o Texto</label>
+          <label class="sim-label"><i class="fa-solid fa-cloud-arrow-up" style="color: #60a5fa;"></i> Carga tu Logo Empresarial</label>
+          <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px;">
+            <label class="btn btn-steel" style="font-size: 0.82rem; cursor: pointer; padding: 0.5rem 0.9rem; margin: 0;">
+              <i class="fa-solid fa-image"></i> Subir Logo (PNG/JPG)
+              <input type="file" id="simCustomLogoFile" accept="image/*" style="display: none;">
+            </label>
+            <button type="button" id="btnRemoveLogo" class="btn btn-steel" style="font-size: 0.82rem; padding: 0.5rem 0.8rem; display: none;" title="Restablecer logo predeterminado">
+              <i class="fa-solid fa-rotate-left"></i> Restablecer
+            </button>
+          </div>
+          <label style="display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: #cbd5e1; cursor: pointer;">
+            <input type="checkbox" id="simRemoveBgCheck" checked>
+            <span><strong>Quitar fondo blanco/claro automáticamente</strong> (renderizar transparente)</span>
+          </label>
+        </div>
+
+        <div class="sim-group">
+          <label class="sim-label">Nombre de Marca o Texto Adicional</label>
           <input type="text" id="simCustomText" class="sim-input" value="2 SOLUTIONS">
         </div>
 
@@ -674,7 +740,7 @@
       <div>
         <h4 class="footer-h4">Contacto Comercial</h4>
         <ul class="footer-links" style="font-size: 0.9rem;">
-          <li style="color: #ffffff;"><i class="fa-brands fa-whatsapp" style="color: #25D366; margin-right: 8px;"></i> <strong>+57 304 3726578</strong> (Ricardo)</li>
+          <li style="color: #ffffff;"><i class="fa-brands fa-whatsapp" style="color: #25D366; margin-right: 8px;"></i> <strong>+57 304 3726578</strong></li>
           <li><i class="fa-solid fa-envelope" style="color: var(--orange-bright); margin-right: 8px;"></i> info@2solutions.com.co</li>
           <li><i class="fa-solid fa-location-dot" style="color: var(--orange-bright); margin-right: 8px;"></i> Barranquilla, Atlántico</li>
           <li><i class="fa-solid fa-id-card" style="color: var(--orange-bright); margin-right: 8px;"></i> NIT: 901.978.048-9</li>
@@ -684,14 +750,16 @@
 
     <div class="footer-bar">
       <div>&copy; 2026 2SOLUTIONS S.A.S. — Experiencia | Creatividad | Compromiso.</div>
-      <div>Atención Comercial: Ricardo De La Espriella (+57 304 3726578).</div>
+      <div>Atención Comercial Especializada (+57 304 3726578).</div>
     </div>
   </footer>
 
-  <script src="js/auth.js?v=2026.2"></script>
-  <script src="js/crm.js?v=2026.2"></script>
-  <script src="js/store.js?v=2026.2"></script>
-  <script src="js/calculator.js?v=2026.2"></script>
+  <!-- Datos iniciales del CRM para 500+ empresas precargadas -->
+  <script src="js/crm_initial_data.js?v=2026.3"></script>
+  <script src="js/auth.js?v=2026.3"></script>
+  <script src="js/crm.js?v=2026.3"></script>
+  <script src="js/store.js?v=2026.3"></script>
+  <script src="js/calculator.js?v=2026.3"></script>
 
   <script>
     function handleProminentSubmit() {

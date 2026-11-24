@@ -1,77 +1,40 @@
 // PANEL DE ADMINISTRACIÓN & CRM B2B CORPORATIVO
 // 2 SOLUTIONS S.A.S.
 
-const CRM_INITIAL_COMPANIES = [
-  {
-    id: 'comp_1',
-    name: 'Grupo Bolívar & Seguros',
-    nit: '860.002.503-2',
-    city: 'Bogotá / Barranquilla',
-    sector: 'Financiero & Seguros',
-    assignedTo: 'Ricardo De La Espriella',
-    status: 'Cliente Activo',
-    notes: 'Campañas anuales de bolígrafos de alta gama y agendas corporativas.'
-  },
-  {
-    id: 'comp_2',
-    name: 'Constructora Marval S.A.',
-    nit: '800.187.940-1',
-    city: 'Bucaramanga / Costa',
-    sector: 'Construcción & Inmobiliario',
-    assignedTo: 'Israel Duarte',
-    status: 'En Negociación',
-    notes: 'Dotaciones de termos en acero inoxidable, gorras y chalecos estampados.'
-  },
-  {
-    id: 'comp_3',
-    name: 'Distribuciones Farmacéuticas del Caribe',
-    nit: '900.542.110-5',
-    city: 'Barranquilla',
-    sector: 'Salud & Farma',
-    assignedTo: 'Ricardo De La Espriella',
-    status: 'Lead Calificado',
-    notes: 'Interés en artículos promocionales ecológicos y cajas Bento para médicos.'
-  }
-];
-
-const CRM_INITIAL_CONTACTS = [
-  {
-    id: 'cont_1',
-    name: 'Carlos Mendoza',
-    email: 'cmendoza@bolivar.com.co',
-    phone: '+57 310 445 2210',
-    companyId: 'comp_1',
-    companyName: 'Grupo Bolívar & Seguros',
-    role: 'Director de Compras',
-    registeredAt: '2026-10-15'
-  },
-  {
-    id: 'cont_2',
-    name: 'María Alejandra Ramos',
-    email: 'mramos@marval.com.co',
-    phone: '+57 300 812 4433',
-    companyId: 'comp_2',
-    companyName: 'Constructora Marval S.A.',
-    role: 'Coordinadora de Mercadeo',
-    registeredAt: '2026-11-02'
-  },
-  {
-    id: 'cont_3',
-    name: 'Dr. Fernando Gutiérrez',
-    email: 'fgutierrez@caribefarma.com',
-    phone: '+57 315 900 1288',
-    companyId: 'comp_3',
-    companyName: 'Distribuciones Farmacéuticas del Caribe',
-    role: 'Gerente Comercial',
-    registeredAt: '2026-11-18'
-  }
-];
-
 const AdminPanel = {
   getCompanies() {
     let data = localStorage.getItem('2solutions_crm_companies');
     if (!data) {
-      data = JSON.stringify(CRM_INITIAL_COMPANIES);
+      if (window.CRM_INITIAL_COMPANIES && window.CRM_INITIAL_COMPANIES.length > 0) {
+        data = JSON.stringify(window.CRM_INITIAL_COMPANIES);
+      } else {
+        data = JSON.stringify([
+          {
+            id: 'comp_1',
+            name: 'Cruz Roja Colombiana Seccional Atlántico',
+            nit: '890102064',
+            city: 'Barranquilla (Atlántico)',
+            sector: 'Salud / IPS',
+            assignedTo: 'Asesor Comercial 2 SOLUTIONS',
+            status: 'Cliente Activo',
+            address: 'Calle 65 No.34-33',
+            phone: '3695320',
+            email: 'enfermerajefe@cruzrojaatlantico.org'
+          },
+          {
+            id: 'comp_2',
+            name: 'Comfamiliar Atlántico',
+            nit: '890101994',
+            city: 'Barranquilla (Atlántico)',
+            sector: 'Caja de Compensación',
+            assignedTo: 'Asesor Comercial 2 SOLUTIONS',
+            status: 'Cliente Activo',
+            address: 'Calle 47 no. 43-57',
+            phone: '6053966590',
+            email: 'salud@comfamiliar.com.co'
+          }
+        ]);
+      }
       localStorage.setItem('2solutions_crm_companies', data);
     }
     return JSON.parse(data);
@@ -80,7 +43,11 @@ const AdminPanel = {
   getContacts() {
     let data = localStorage.getItem('2solutions_crm_contacts');
     if (!data) {
-      data = JSON.stringify(CRM_INITIAL_CONTACTS);
+      if (window.CRM_INITIAL_CONTACTS && window.CRM_INITIAL_CONTACTS.length > 0) {
+        data = JSON.stringify(window.CRM_INITIAL_CONTACTS);
+      } else {
+        data = JSON.stringify([]);
+      }
       localStorage.setItem('2solutions_crm_contacts', data);
     }
     return JSON.parse(data);
@@ -103,22 +70,20 @@ const AdminPanel = {
   },
 
   open() {
-    const user = AuthManager.getCurrentUser();
-    if (!user || (user.role !== 'SUPERUSER' && user.role !== 'ADMIN')) {
-      alert('Acceso restringido: Se requieren permisos de Superusuario (Israel.Duarte.Carrasquilla@gmail.com) o Administrador (Ricardo.Delaespriella@outlook.es).');
-      return;
-    }
-
     const modal = document.getElementById('adminModal');
     if (modal) {
       modal.style.display = 'flex';
+      modal.classList.add('active');
       this.renderDashboard();
     }
   },
 
   close() {
     const modal = document.getElementById('adminModal');
-    if (modal) modal.style.display = 'none';
+    if (modal) {
+      modal.style.display = 'none';
+      modal.classList.remove('active');
+    }
   },
 
   switchTab(tabName) {
@@ -140,86 +105,129 @@ const AdminPanel = {
     const companies = this.getCompanies();
     const contacts = this.getContacts();
     const quotes = this.getQuotes();
-    const user = AuthManager.getCurrentUser();
 
-    const statsElem = document.getElementById('adminStatsSummary');
-    if (statsElem) {
-      statsElem.innerHTML = `
+    const statsGrid = document.getElementById('adminStatsSummary');
+    if (statsGrid) {
+      statsGrid.innerHTML = `
         <div class="crm-stat-card">
-          <div class="stat-icon"><i class="fa-solid fa-building"></i></div>
-          <div class="stat-val">${companies.length}</div>
-          <div class="stat-lbl">Empresas en CRM</div>
+          <div class="crm-stat-val">${companies.length.toLocaleString()}</div>
+          <div class="crm-stat-lbl">Empresas en Directorio CRM</div>
         </div>
         <div class="crm-stat-card">
-          <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
-          <div class="stat-val">${contacts.length}</div>
-          <div class="stat-lbl">Contactos Vinculados</div>
+          <div class="crm-stat-val">${contacts.length.toLocaleString()}</div>
+          <div class="crm-stat-lbl">Usuarios & Contactos Vinculados</div>
         </div>
         <div class="crm-stat-card">
-          <div class="stat-icon"><i class="fa-solid fa-file-invoice"></i></div>
-          <div class="stat-val">${quotes.length}</div>
-          <div class="stat-lbl">Cotizaciones Registradas</div>
+          <div class="crm-stat-val">${quotes.length.toLocaleString()}</div>
+          <div class="crm-stat-lbl">Solicitudes de Cotización</div>
         </div>
-        <div class="crm-stat-card">
-          <div class="stat-icon"><i class="fa-solid fa-shield-halved"></i></div>
-          <div class="stat-val">${user.role === 'SUPERUSER' ? 'Superadmin' : 'Admin'}</div>
-          <div class="stat-lbl">${user.email}</div>
+        <div class="crm-stat-card" style="border-color: rgba(37,211,102,0.4)">
+          <div class="crm-stat-val" style="color: #25D366"><i class="fa-solid fa-cloud-arrow-up"></i> Sincronizado</div>
+          <div class="crm-stat-lbl">Base de Datos Lista para Exportar</div>
         </div>
       `;
     }
 
-    // Actividad reciente
-    const recentElem = document.getElementById('adminRecentActivity');
-    if (recentElem) {
-      recentElem.innerHTML = `
-        <h4><i class="fa-solid fa-clock-rotate-left"></i> Resumen de Gestión Reciente</h4>
-        <p>Sesión activa iniciada por <strong>${user.name}</strong> (${user.roleLabel}).</p>
-        <div class="activity-timeline">
-          <div class="act-item">
-            <span class="act-dot"></span>
-            <div><strong>Catálogo Promocionales 2026:</strong> Actualizado sin precios públicos para cotización formal.</div>
-          </div>
-          <div class="act-item">
-            <span class="act-dot"></span>
-            <div><strong>Contacto comercial asignado:</strong> Ricardo De La Espriella (+57 304 3726578).</div>
-          </div>
-          <div class="act-item">
-            <span class="act-dot"></span>
-            <div><strong>Superusuario del Sistema:</strong> Israel Duarte Carrasquilla.</div>
-          </div>
+    const recent = document.getElementById('adminRecentActivity');
+    if (recent) {
+      recent.innerHTML = `
+        <h4 style="color:#ffffff; margin-bottom: 1rem; font-size: 1.05rem;">Resumen Ejecutivo de Gestión</h4>
+        <div style="font-size: 0.88rem; color:#cbd5e1; line-height: 1.6;">
+          <p>• Directorio corporativo activo con <strong>${companies.length.toLocaleString()} empresas</strong> registradas y vinculadas por departamento y ciudad.</p>
+          <p>• Puedes <strong>Exportar a CSV / Excel</strong> o <strong>Cargar nuevas bases masivas</strong> desde la pestaña de Empresas.</p>
+          <p>• Canales comerciales vinculados directamente a WhatsApp corporativo (+57 304 3726578).</p>
         </div>
       `;
     }
   },
 
+  companySearchTerm: '',
+  companyPage: 1,
+  pageSize: 25,
+
+  filterCompanies() {
+    const input = document.getElementById('crmCompanySearch');
+    if (input) {
+      this.companySearchTerm = input.value.toLowerCase().trim();
+      this.companyPage = 1;
+      this.renderCompanies();
+    }
+  },
+
   renderCompanies() {
-    const list = this.getCompanies();
+    const all = this.getCompanies();
     const contacts = this.getContacts();
     const tbody = document.getElementById('tableCompaniesBody');
     if (!tbody) return;
 
-    tbody.innerHTML = list.map(comp => {
+    let filtered = all;
+    if (this.companySearchTerm) {
+      filtered = all.filter(c => 
+        (c.name && c.name.toLowerCase().includes(this.companySearchTerm)) ||
+        (c.nit && c.nit.toLowerCase().includes(this.companySearchTerm)) ||
+        (c.city && c.city.toLowerCase().includes(this.companySearchTerm)) ||
+        (c.sector && c.sector.toLowerCase().includes(this.companySearchTerm))
+      );
+    }
+
+    const total = filtered.length;
+    const start = (this.companyPage - 1) * this.pageSize;
+    const paginated = filtered.slice(start, start + this.pageSize);
+
+    // Actualizar indicador de paginación
+    const pageIndicator = document.getElementById('crmCompanyPageInfo');
+    if (pageIndicator) {
+      const totalPages = Math.ceil(total / this.pageSize) || 1;
+      pageIndicator.textContent = `Página ${this.companyPage} de ${totalPages} (${total.toLocaleString()} empresas encontradas)`;
+    }
+
+    if (paginated.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 2rem; color:#94a3b8">No se encontraron empresas con el término "${this.companySearchTerm}".</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = paginated.map(comp => {
       const compContacts = contacts.filter(c => c.companyId === comp.id || (c.companyName && c.companyName.toLowerCase() === comp.name.toLowerCase()));
       return `
         <tr>
-          <td><strong>${comp.name}</strong><br><small style="color:#94a3b8">NIT: ${comp.nit || 'N/A'}</small></td>
-          <td>${comp.city || 'Barranquilla'}</td>
-          <td><span class="crm-badge-sector">${comp.sector || 'General'}</span></td>
           <td>
-            <strong>${compContacts.length} contactos</strong>
-            <div style="font-size: 0.75rem; color:#94a3b8;">
-              ${compContacts.map(c => `• ${c.name} (${c.email})`).slice(0, 2).join('<br>')}
-              ${compContacts.length > 2 ? '<br>y más...' : ''}
-            </div>
+            <strong>${comp.name}</strong><br>
+            <small style="color:#94a3b8">NIT: ${comp.nit || 'N/A'}</small>
+            ${comp.email ? `<br><small style="color:#60a5fa">${comp.email}</small>` : ''}
           </td>
-          <td><span class="crm-status-tag ${comp.status === 'Cliente Activo' ? 'active' : 'lead'}">${comp.status}</span></td>
-          <td>${comp.assignedTo || 'Ricardo D.'}</td>
+          <td>${comp.city || 'Barranquilla'}</td>
+          <td><span class="crm-badge-sector">${comp.sector || 'Comercial'}</span></td>
           <td>
-            <button class="btn-table-action" onclick="AdminPanel.deleteCompany('${comp.id}')" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+            <strong>${compContacts.length > 0 ? compContacts.length + ' usuarios' : (comp.contactsCount || 0) + ' asignados'}</strong>
+            ${comp.phone ? `<br><small style="color:#25D366"><i class="fa-solid fa-phone"></i> ${comp.phone}</small>` : ''}
+          </td>
+          <td><span class="crm-status-tag ${comp.status === 'Cliente Activo' ? 'active' : 'lead'}">${comp.status || 'Prospecto'}</span></td>
+          <td>${comp.assignedTo || 'Equipo Comercial'}</td>
+          <td>
+            <div style="display:flex; gap: 6px;">
+              ${comp.phone ? `<a href="https://wa.me/57${comp.phone.replace(/[^0-9]/g, '')}?text=Hola,%20nos%20comunicamos%20de%202%20SOLUTIONS%20respecto%20a%20art%C3%ADculos%20promocionales" target="_blank" class="btn-table-action" style="color:#25D366" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>` : ''}
+              <button class="btn-table-action" onclick="AdminPanel.deleteCompany('${comp.id}')" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+            </div>
           </td>
         </tr>
       `;
     }).join('');
+  },
+
+  nextCompanyPage() {
+    const all = this.getCompanies();
+    const total = this.companySearchTerm ? all.filter(c => c.name.toLowerCase().includes(this.companySearchTerm)).length : all.length;
+    if (this.companyPage * this.pageSize < total) {
+      this.companyPage++;
+      this.renderCompanies();
+    }
+  },
+
+  prevCompanyPage() {
+    if (this.companyPage > 1) {
+      this.companyPage--;
+      this.renderCompanies();
+    }
   },
 
   renderContacts() {
@@ -228,7 +236,12 @@ const AdminPanel = {
     const tbody = document.getElementById('tableContactsBody');
     if (!tbody) return;
 
-    tbody.innerHTML = contacts.map(c => {
+    if (contacts.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 2rem; color:#94a3b8">No hay contactos registrados aún.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = contacts.slice(0, 50).map(c => {
       const comp = companies.find(co => co.id === c.companyId) || { name: c.companyName || 'Empresa General' };
       return `
         <tr>
@@ -270,25 +283,26 @@ const AdminPanel = {
   },
 
   showAddCompanyModal() {
-    const name = prompt('Nombre de la Empresa:');
+    const name = prompt('Nombre de la Empresa / Razón Social:');
     if (!name) return;
     const nit = prompt('NIT de la empresa:');
     const city = prompt('Ciudad sede:', 'Barranquilla');
     const sector = prompt('Sector económico:', 'Industrial / Comercial');
 
     const companies = this.getCompanies();
-    companies.push({
+    companies.unshift({
       id: 'comp_' + Date.now(),
       name,
       nit: nit || 'Por definir',
       city: city || 'Barranquilla',
       sector: sector || 'General',
-      assignedTo: 'Ricardo De La Espriella',
+      assignedTo: 'Equipo Comercial 2 SOLUTIONS',
       status: 'Cliente Activo'
     });
     this.saveCompanies(companies);
     this.renderCompanies();
     this.renderDashboard();
+    alert('Empresa vinculada exitosamente.');
   },
 
   showAddContactModal() {
@@ -306,14 +320,14 @@ const AdminPanel = {
     const role = prompt('Cargo en la empresa:', 'Coordinador de Compras');
 
     let compMsg = 'Selecciona la empresa asignándole el número:\n';
-    companies.forEach((co, idx) => {
+    companies.slice(0, 10).forEach((co, idx) => {
       compMsg += `${idx + 1}. ${co.name}\n`;
     });
     const choice = parseInt(prompt(compMsg, '1')) - 1;
     const chosenCompany = companies[choice] || companies[0];
 
     const contacts = this.getContacts();
-    contacts.push({
+    contacts.unshift({
       id: 'cont_' + Date.now(),
       name,
       email,
@@ -326,6 +340,7 @@ const AdminPanel = {
     this.saveContacts(contacts);
     this.renderContacts();
     this.renderDashboard();
+    alert('Contacto agregado y vinculado.');
   },
 
   deleteCompany(id) {
@@ -344,6 +359,99 @@ const AdminPanel = {
       this.renderContacts();
       this.renderDashboard();
     }
+  },
+
+  // EXPORTAR A CSV
+  exportToCSV() {
+    const companies = this.getCompanies();
+    if (companies.length === 0) {
+      alert('No hay información de empresas para exportar.');
+      return;
+    }
+
+    let csvContent = 'data:text/csv;charset=utf-8,';
+    csvContent += 'ID,EMPRESA,NIT,CIUDAD,SECTOR,DIRECCION,TELEFONO,EMAIL,ESTADO,ASIGNADO\n';
+
+    companies.forEach(c => {
+      const clean = (val) => '"' + (val || '').toString().replace(/"/g, '""') + '"';
+      const row = [
+        clean(c.id),
+        clean(c.name),
+        clean(c.nit),
+        clean(c.city),
+        clean(c.sector),
+        clean(c.address),
+        clean(c.phone),
+        clean(c.email),
+        clean(c.status),
+        clean(c.assignedTo)
+      ].join(',');
+      csvContent += row + '\n';
+    });
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `2SOLUTIONS_CRM_EMPRESAS_${new Date().toISOString().slice(0,10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  },
+
+  // IMPORTAR DESDE CSV
+  importFromCSV(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const text = e.target.result;
+        const lines = text.split(/\r\n|\n/);
+        if (lines.length < 2) {
+          alert('El archivo CSV parece estar vacío.');
+          return;
+        }
+
+        const newCompanies = [];
+        for (let i = 1; i < lines.length; i++) {
+          const line = lines[i].trim();
+          if (!line) continue;
+          
+          // Separación simple respetando comillas básicas
+          const cols = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
+          if (cols.length >= 2) {
+            newCompanies.push({
+              id: 'comp_imp_' + Date.now() + '_' + i,
+              name: cols[3] || cols[1] || cols[0],
+              nit: cols[4] || cols[2] || '',
+              city: cols[2] ? cols[2] + ' (' + cols[1] + ')' : (cols[3] || 'Barranquilla'),
+              sector: cols[0] || 'Comercial',
+              phone: cols[6] || '',
+              email: cols[7] || '',
+              address: cols[8] || '',
+              status: 'Prospecto Importado',
+              assignedTo: 'Equipo Comercial 2 SOLUTIONS'
+            });
+          }
+        }
+
+        if (newCompanies.length > 0) {
+          const current = AdminPanel.getCompanies();
+          const combined = [...newCompanies, ...current];
+          AdminPanel.saveCompanies(combined);
+          AdminPanel.renderCompanies();
+          AdminPanel.renderDashboard();
+          alert(`¡Se han importado exitosamente ${newCompanies.length} empresas al CRM!`);
+        } else {
+          alert('No se pudieron procesar filas válidas en el CSV.');
+        }
+      } catch (err) {
+        console.error('Error al importar CSV:', err);
+        alert('Hubo un error al leer el archivo CSV. Verifica el formato.');
+      }
+    };
+    reader.readAsText(file);
   }
 };
 

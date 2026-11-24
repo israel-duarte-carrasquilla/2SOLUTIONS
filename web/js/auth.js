@@ -73,7 +73,7 @@ const AuthManager = {
       email: userEmail,
       provider: 'Google',
       avatar: 'https://cdn-icons-png.flaticon.com/512/2991/2991148.png',
-      company: 'Corporativo Google Partner'
+      company: 'Corporativo 2 SOLUTIONS'
     };
 
     this.setCurrentUser(user);
@@ -83,7 +83,7 @@ const AuthManager = {
 
   loginWithMicrosoft() {
     // Simulación de Microsoft MSAL OAuth
-    const userName = prompt('Inicio con Microsoft:\nIngresa tu Nombre completo:', 'Ricardo De La Espriella');
+    const userName = prompt('Inicio con Microsoft:\nIngresa tu Nombre completo:', 'Administrador Comercial');
     if (!userName) return;
     const userEmail = prompt('Ingresa tu cuenta Microsoft (ej: Ricardo.Delaespriella@outlook.es):', AUTH_CONFIG.ADMIN_EMAIL);
     if (!userEmail) return;
